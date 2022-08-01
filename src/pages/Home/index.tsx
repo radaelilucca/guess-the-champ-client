@@ -8,15 +8,15 @@ const HomePage = () => {
       <h1 className="text-[56px] font-poppins font-bold text-left w-full">
         Hue Who is
       </h1>
-      <h5 className="text-[24px]">A League of Legends guessing game.</h5>
+      <h5 className="text-[24px]">A League of Legends guessing game!</h5>
 
       <p className="mt-[100px] font-light text-[24px]">
-        Guess who is the champion according to their skills or synopsis.a
+        Guess who is the champion according to their skills or synopsis.
       </p>
 
       <Link
         to="/game"
-        className="font-semibold text-[2rem] text-darkBackground bg-primary p-5 w-[90%] hover:bg-secondary flex items-center justify-center mt-[100px] rounded-md"
+        className="font-semibold text-[2rem] text-darkBackground bg-primary p-5 w-[100%] hover:bg-secondary flex items-center justify-center mt-[100px] rounded-md"
       >
         Play
       </Link>
