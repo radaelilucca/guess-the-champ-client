@@ -1,16 +1,22 @@
+import { ThemeProvider } from "styled-components";
 import { ChampionsProvider } from "./context/champions";
 import { GameProvider } from "./context/game/gameContext";
 import { PagesRoutes } from "./Routes";
+import { GlobalStyles } from "./styles";
+import { mainTheme } from "./styles/themes";
 
 function App() {
   return (
-    <div className="bg-darkBackground h-screen w-screen flex justify-center items-center font-sans">
-      <ChampionsProvider>
-        <GameProvider>
-          <PagesRoutes />
-        </GameProvider>
-      </ChampionsProvider>
-    </div>
+    <ThemeProvider theme={mainTheme}>
+      <GlobalStyles />
+      <div className="app-wrapper">
+        <ChampionsProvider>
+          <GameProvider>
+            <PagesRoutes />
+          </GameProvider>
+        </ChampionsProvider>
+      </div>
+    </ThemeProvider>
   );
 }
 
