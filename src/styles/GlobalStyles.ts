@@ -13,7 +13,10 @@ export const GlobalStyles = createGlobalStyle`
   justify-content: center;
   align-items:center;
 
-  font-family: ${(props) => props.theme.fontFamily.poppins}
-}
-
+  font-family: ${(props) => props.theme.fontFamily.poppins}; 
+  
+  * {
+    transition: all 150ms ease;
+    }
+  }
 `;
