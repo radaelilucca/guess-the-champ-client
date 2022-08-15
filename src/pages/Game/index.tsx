@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import {
   ChampionsContext,
   ChampionsContextType,
@@ -39,8 +39,8 @@ const ScoreItem = ({ label, hits, enabledStars }: IScoreItemProps) => {
         <span>{hits} hits</span>
       </div>
       <div className="start-icons-container">
-        {stars.map((iconUlr) => (
-          <img src={iconUlr} />
+        {stars.map((src, index) => (
+          <img key={`${src}-${index}`} src={src} />
         ))}
       </div>
     </ScoreItemContainer>
@@ -55,31 +55,73 @@ const GameView = () => {
     startGame();
   };
 
+  useEffect(() => {
+    handleGetRandomChampion();
+  }, []);
+
+  useEffect(() => {
+    console.log({ gameState });
+  }, [gameState]);
+
   const championsOptions = champions.map(({ name }) => ({
     value: name,
     label: name,
   }));
+
+  const renderChampionContent = () => {
+    if (gameState.isLoading) return null;
+
+    let textContent = "";
+    let imageSRC = "";
+
+    const { guessingMode } = gameState;
+
+    switch (guessingMode.name) {
+      case "ability":
+        textContent = gameState.randomSpell.description;
+        imageSRC = gameState.randomSpell.imageSRC;
+
+        break;
+
+      case "passive":
+        textContent = gameState.passive.description;
+        imageSRC = gameState.passive.imageSRC;
+        break;
+
+      case "blurb":
+        textContent = gameState.currentChampion.blurb;
+
+      default:
+        break;
+    }
+
+    return (
+      <ChampContentContainer>
+        {guessingMode.subMode === "description" && <span>{textContent}</span>}
+        {guessingMode.subMode === "image" && (
+          <img src={imageSRC} alt="champion spell" />
+        )}
+      </ChampContentContainer>
+    );
+  };
 
   return (
     <Container>
       <ClueButton type="button" disabled>
         <img src="/icons/tip-icon.svg" />
       </ClueButton>
-      <Question>Which champion has this ability?</Question>
 
-      <ChampContentContainer>
-        <img
-          src="https://ddragon.leagueoflegends.com/cdn/12.14.1/img/spell/AatroxQ.png"
-          alt="champion spell"
-        />
-      </ChampContentContainer>
+      <Question>{gameState.question}</Question>
+
+      {renderChampionContent()}
+
       <ChampionSelect
         options={championsOptions}
         className="champ-select"
         classNamePrefix="champ-select"
       />
 
-      <ScoresContainer>
+      {/* <ScoresContainer>
         <h5>Your scores:</h5>
 
         <ScoresList>
@@ -89,7 +131,7 @@ const GameView = () => {
 
           <strong className="failures">Total failures: 3</strong>
         </ScoresList>
-      </ScoresContainer>
+      </ScoresContainer> */}
     </Container>
   );
 };

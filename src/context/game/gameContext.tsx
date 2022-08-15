@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState } from "react";
-import { getRandomNumberInRange } from "../../utils";
+import { getRandomNumberInRange, getRandomQuestion } from "../../utils";
 import {
   ChampionDataType,
   ChampionsContext,
@@ -9,7 +9,7 @@ import {
   CleanChampionSpellType,
   GameContextType,
   GameStateType,
-  guessingModesMap,
+  GuessingModeType,
 } from "./game.types";
 
 const GameContext = createContext<GameContextType | null>(null);
@@ -19,10 +19,27 @@ const PASSIVE_BASE_URL =
 const SPELL_BASE_URL =
   "http://ddragon.leagueoflegends.com/cdn/12.14.1/img/spell";
 
-const modes = [
-  guessingModesMap.abilityImage,
-  guessingModesMap.abilityDescription,
-  guessingModesMap.blurb,
+const guessingModes: GuessingModeType[] = [
+  {
+    name: "ability",
+    subMode: "image",
+  },
+  {
+    name: "ability",
+    subMode: "description",
+  },
+  {
+    name: "passive",
+    subMode: "image",
+  },
+  {
+    name: "passive",
+    subMode: "description",
+  },
+  {
+    name: "blurb",
+    subMode: "description",
+  },
 ];
 
 interface IGameProviderProps {
@@ -33,6 +50,8 @@ const GameProvider = ({ children }: IGameProviderProps) => {
   const [gameState, setGameState] = useState<GameStateType>({
     isLoading: true,
   } as GameStateType);
+
+  const [fetching, setFetching] = useState(false);
 
   const { getRandomChampionId, getChampionData } = useContext(
     ChampionsContext
@@ -48,24 +67,19 @@ const GameProvider = ({ children }: IGameProviderProps) => {
       championId: getRandomChampionId(),
     });
 
-    const guessingMode: keyof typeof guessingModesMap = modes[
-      getRandomNumberInRange({ min: 0, max: modes.length - 1 })
-    ] as keyof typeof guessingModesMap;
+    const guessingMode: GuessingModeType =
+      guessingModes[
+        getRandomNumberInRange({ min: 0, max: guessingModes.length - 1 })
+      ];
 
     if (randomChampionData) {
-      console.log("CHAMP ->", randomChampionData);
-
       const skillIndex = getRandomNumberInRange({
         min: 0,
         max: randomChampionData.spells.length - 1,
       });
 
-      console.log("SKILL INDEX =>", skillIndex);
-
       const { name, description, id, image } =
         randomChampionData?.spells[skillIndex || 0];
-
-      console.log("RAW SKILL -> ", randomChampionData?.spells[skillIndex || 0]);
 
       const randomSpell: CleanChampionSpellType = {
         id,
@@ -83,10 +97,7 @@ const GameProvider = ({ children }: IGameProviderProps) => {
         imageSRC: `${PASSIVE_BASE_URL}/${championPassive.image.full}`,
       };
 
-      console.log(randomSpell.imageSRC);
-      console.log(passive.imageSRC);
-
-      console.log(randomSpell);
+      const question = getRandomQuestion(guessingMode.name);
 
       const newGameState = {
         currentChampion: randomChampionData,
@@ -96,10 +107,9 @@ const GameProvider = ({ children }: IGameProviderProps) => {
         isLoading: false,
         randomSpell,
         passive,
+        question,
       };
       setGameState(newGameState);
-
-      console.log({ newGameState });
     }
   };
 

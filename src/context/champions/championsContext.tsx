@@ -14,47 +14,43 @@ import {
 } from "./champions.types";
 import { getRandomNumberInRange } from "../../utils";
 
-const champions = Object.values(championsData);
-
 const STORAGE_CHAMPS_CACHE_KEY = "champions-cache";
 
 const ChampionsContext = createContext<ChampionsContextType | null>(null);
 
 const ChampionsProvider = ({ children }: IChampionsProviderProps) => {
-  const [championsCache, setChampionsCache] = useState<ChampionDataType[]>([]);
+  const champions = Object.values(championsData);
+  // const [championsCache, setChampionsCache] = useState<ChampionDataType[]>([]);
 
-  const getChampionData = useCallback(
-    async ({
-      championId,
-    }: {
-      championId: string;
-    }): Promise<ChampionDataType | undefined> => {
-      const URL = `http://ddragon.leagueoflegends.com/cdn/12.14.1/data/en_US/champion/${championId}.json`;
+  const getChampionData = async ({
+    championId,
+  }: {
+    championId: string;
+  }): Promise<ChampionDataType | undefined> => {
+    const URL = `http://ddragon.leagueoflegends.com/cdn/12.14.1/data/en_US/champion/${championId}.json`;
 
-      const cachedChampion = championsCache.find(
-        (championItem) => championItem.id === championId
-      );
+    // const cachedChampion = championsCache.find(
+    //   (championItem) => championItem.id === championId
+    // );
 
-      if (cachedChampion) return cachedChampion;
+    // if (cachedChampion) return cachedChampion;
 
-      try {
-        const { data } = await axios.get(URL);
+    try {
+      const { data } = await axios.get(URL);
 
-        const championData: ChampionDataType = data.data[championId];
+      const championData: ChampionDataType = data.data[championId];
 
-        if (championData) {
-          setChampionsCache((prev) => [...prev, championData]);
+      if (championData) {
+        // setChampionsCache((prev) => [...prev, championData]);
 
-          return championData;
-        }
-      } catch (error) {
-        console.error("ERROR ON GET CHAMPION DATA =>", error);
+        return championData;
       }
-    },
-    [championsCache]
-  );
+    } catch (error) {
+      console.error("ERROR ON GET CHAMPION DATA =>", error);
+    }
+  };
 
-  const getRandomChampionId = useCallback(() => {
+  const getRandomChampionId = () => {
     const randomIndex = getRandomNumberInRange({
       min: 0,
       max: champions.length - 1,
@@ -63,32 +59,40 @@ const ChampionsProvider = ({ children }: IChampionsProviderProps) => {
     const championId = champions[randomIndex].id;
 
     return championId;
-  }, [champions]);
+  };
+
+  // useEffect(() => {
+  //   const storedCache = localStorage.getItem(STORAGE_CHAMPS_CACHE_KEY);
+
+  //   if (storedCache) {
+  //     const jsonCache: ChampionDataType[] = JSON.parse(storedCache);
+  //     setChampionsCache(jsonCache);
+
+  //     // console.log({ loadedCache: storedCache, jsonCache });
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   if (championsCache.length) {
+  //     localStorage.setItem(
+  //       STORAGE_CHAMPS_CACHE_KEY,
+  //       JSON.stringify(championsCache)
+  //     );
+  //   }
+  // }, [championsCache]);
 
   const values = useMemo(
-    () => ({ champions, getChampionData, getRandomChampionId }),
-    [champions, getChampionData, getRandomChampionId]
+    () => ({
+      champions,
+      getChampionData,
+      getRandomChampionId,
+    }),
+    [getChampionData, getRandomChampionId]
   );
 
   useEffect(() => {
-    const storedCache = localStorage.getItem(STORAGE_CHAMPS_CACHE_KEY);
-
-    if (storedCache) {
-      const jsonCache: ChampionDataType[] = JSON.parse(storedCache);
-      setChampionsCache(jsonCache);
-
-      console.log({ loadedCache: storedCache, jsonCache });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (championsCache.length) {
-      localStorage.setItem(
-        STORAGE_CHAMPS_CACHE_KEY,
-        JSON.stringify(championsCache)
-      );
-    }
-  }, [championsCache]);
+    console.log("VALUES CHANGED", values);
+  }, [values]);
 
   return (
     <ChampionsContext.Provider value={values}>

@@ -17,11 +17,11 @@ declare module "styled-components" {
     };
 
     rounded: {
-      circle: "50%";
-      sm: "0.2rem";
-      md: "0.4rem";
-      lg: "0.6rem";
-      xl: "1rem";
+      circle: string;
+      sm: string;
+      md: string;
+      lg: string;
+      xl: string;
     };
   }
 }

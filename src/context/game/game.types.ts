@@ -1,11 +1,12 @@
 import { ChampionDataType } from "../champions";
 
-export const guessingModesMap = {
-  abilityImage: "ability-image",
-  abilityDescription: "ability-description",
-  blurb: "blurb",
-  passiveImage: "passive-image",
-  passiveDescription: "passive-description",
+export type GuessingModeNamesType = "ability" | "blurb" | "passive";
+
+export type GuessingSubModeNamesType = "image" | "description";
+
+export type GuessingModeType = {
+  name: GuessingModeNamesType;
+  subMode: GuessingSubModeNamesType;
 };
 
 export type CleanChampionSpellType = {
@@ -17,12 +18,13 @@ export type CleanChampionSpellType = {
 
 export type GameStateType = {
   currentChampion: ChampionDataType;
-  guessingMode: keyof typeof guessingModesMap;
+  guessingMode: GuessingModeType;
   totalGuesses: number;
   score: number;
   isLoading: boolean;
   randomSpell: CleanChampionSpellType;
   passive: CleanChampionSpellType;
+  question: string;
 };
 
 export type GameContextType = {

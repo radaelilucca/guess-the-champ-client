@@ -4,7 +4,7 @@ interface Props {
 }
 
 const getRandomNumberInRange = ({ min, max }: Props) => {
-  return Math.round(Math.random() * (max - min) + min);
+  return Math.floor(Math.random() * (max - min) + min);
 };
 
 export { getRandomNumberInRange };

@@ -7,7 +7,7 @@ export const Container = styled.div`
   align-items: center;
 
   height: 100%;
-  padding: 32px;
+  padding: 2rem;
 
   position: relative;
 
@@ -26,8 +26,8 @@ export const ClueButton = styled.button`
   display: grid;
   place-items: center;
 
-  height: 48px;
-  width: 48px;
+  height: 3rem;
+  width: 3rem;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.secondary};
@@ -42,24 +42,34 @@ export const Question = styled.h1`
   color: ${({ theme }) => theme.colors.primary};
 
   font-weight: 500;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
+
+  line-height: 3rem;
 
   text-align: center;
 
   margin-top: 2rem;
+
+  display: block;
+
+  border: 2px solid red;
+
+  height: 20%;
 `;
 
 export const ChampContentContainer = styled.div`
+  height: 40%;
   width: 100%;
+
+  border: 2px solid red;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  margin-top: 40px;
-
-  min-height: 170px;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
 
   img {
     height: 5.125rem;
@@ -67,12 +77,19 @@ export const ChampContentContainer = styled.div`
 
     border: ${({ theme }) => `0.125rem solid ${theme.colors.primary}`};
   }
+
+  span {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    text-align: center;
+    color: ${({ theme }) => theme.colors.lightText};
+  }
 `;
 
 export const ChampionSelect = styled(reactSelect)`
   width: 100%;
 
-  font-size: 19.2px;
+  font-size: 1.2rem;
   color: ${({ theme }) => theme.colors.darkText};
 `;
 
@@ -88,7 +105,7 @@ export const ScoresContainer = styled.div`
 
   h5 {
     align-self: flex-start;
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 
   .failures {
@@ -117,8 +134,9 @@ export const ScoresList = styled.ul`
 `;
 
 export const ScoreItemContainer = styled.li`
-  height: 80px;
-  padding: 16px;
+  height: 5rem;
+
+  padding: 1rem;
 
   display: flex;
   align-items: center;

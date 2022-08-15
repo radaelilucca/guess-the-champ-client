@@ -1,1 +1,2 @@
-export * from "./randomNumberInRange"
+export * from "./randomNumberInRange";
+export * from "./getRandomQuestion";
