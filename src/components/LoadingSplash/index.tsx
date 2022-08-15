@@ -9,14 +9,14 @@ const LoadingSplash = ({
   loadingText = "Loading...",
   isOpen,
 }: ILoadingSplash) => {
-  const randomEmoteSRC = getRandomEmoteImage();
+  const randomEmote = getRandomEmoteImage();
 
   if (!isOpen) return null;
 
   return (
     <Container>
       <Spinner />
-      <EmoteImage src={randomEmoteSRC} alt="Soraka Emote" />
+      <EmoteImage src={randomEmote.src} alt={`${randomEmote.name} emote`} />
 
       <LoadingText>{loadingText}</LoadingText>
     </Container>
