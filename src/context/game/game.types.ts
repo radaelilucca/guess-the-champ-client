@@ -21,13 +21,14 @@ export type GameStateType = {
   guessingMode: GuessingModeType;
   totalGuesses: number;
   score: number;
-  isLoading: boolean;
   randomSpell: CleanChampionSpellType;
   passive: CleanChampionSpellType;
   question: string;
+  inProgress: boolean;
 };
 
 export type GameContextType = {
   gameState: GameStateType;
   startGame: () => void;
+  isLoading: boolean;
 };

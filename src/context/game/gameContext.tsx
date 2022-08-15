@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo, useState } from "react";
+import { PASSIVE_BASE_URL, SPELL_BASE_URL } from "../../const/urls";
 import { getRandomNumberInRange, getRandomQuestion } from "../../utils";
 import {
   ChampionDataType,
@@ -14,32 +15,27 @@ import {
 
 const GameContext = createContext<GameContextType | null>(null);
 
-const PASSIVE_BASE_URL =
-  "http://ddragon.leagueoflegends.com/cdn/12.14.1/img/passive";
-const SPELL_BASE_URL =
-  "http://ddragon.leagueoflegends.com/cdn/12.14.1/img/spell";
-
 const guessingModes: GuessingModeType[] = [
   {
     name: "ability",
     subMode: "image",
   },
-  {
-    name: "ability",
-    subMode: "description",
-  },
+  // {
+  //   name: "ability",
+  //   subMode: "description",
+  // },
   {
     name: "passive",
     subMode: "image",
   },
-  {
-    name: "passive",
-    subMode: "description",
-  },
-  {
-    name: "blurb",
-    subMode: "description",
-  },
+  // {
+  //   name: "passive",
+  //   subMode: "description",
+  // },
+  // {
+  //   name: "blurb",
+  //   subMode: "description",
+  // },
 ];
 
 interface IGameProviderProps {
@@ -48,21 +44,18 @@ interface IGameProviderProps {
 
 const GameProvider = ({ children }: IGameProviderProps) => {
   const [gameState, setGameState] = useState<GameStateType>({
-    isLoading: true,
+    inProgress: false,
   } as GameStateType);
 
-  const [fetching, setFetching] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { getRandomChampionId, getChampionData } = useContext(
     ChampionsContext
   ) as ChampionsContextType;
 
-  // currentChampion: ChampionDataType;
-  // guessingMode: "ability-image" | "ability-description" | "blurb",
-  // totalGuesses: number,
-  // score: number,
-
   const startGame = async () => {
+    setIsLoading(true);
+
     const randomChampionData = await getChampionData({
       championId: getRandomChampionId(),
     });
@@ -104,17 +97,18 @@ const GameProvider = ({ children }: IGameProviderProps) => {
         guessingMode,
         totalGuesses: 0,
         score: 0,
-        isLoading: false,
         randomSpell,
         passive,
         question,
+        inProgress: true,
       };
       setGameState(newGameState);
+      setIsLoading(false);
     }
   };
 
   const values = useMemo(
-    () => ({ gameState, startGame }),
+    () => ({ gameState, startGame, isLoading }),
     [gameState, startGame]
   );
 

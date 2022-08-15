@@ -1,4 +1,5 @@
 import { useContext, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import {
   ChampionsContext,
   ChampionsContextType,
@@ -48,20 +49,12 @@ const ScoreItem = ({ label, hits, enabledStars }: IScoreItemProps) => {
 };
 
 const GameView = () => {
-  const { startGame, gameState } = useContext(GameContext) as GameContextType;
+  const { gameState } = useContext(GameContext) as GameContextType;
   const { champions } = useContext(ChampionsContext) as ChampionsContextType;
-
-  const handleGetRandomChampion = async () => {
-    startGame();
-  };
-
-  useEffect(() => {
-    handleGetRandomChampion();
-  }, []);
 
   useEffect(() => {
     console.log({ gameState });
-  }, [gameState]);
+  }, []);
 
   const championsOptions = champions.map(({ name }) => ({
     value: name,
@@ -69,8 +62,6 @@ const GameView = () => {
   }));
 
   const renderChampionContent = () => {
-    if (gameState.isLoading) return null;
-
     let textContent = "";
     let imageSRC = "";
 
@@ -104,6 +95,8 @@ const GameView = () => {
       </ChampContentContainer>
     );
   };
+
+  if (!gameState.inProgress) return <Navigate to="/" />;
 
   return (
     <Container>

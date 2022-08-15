@@ -45,13 +45,15 @@ export const HeadlineContainer = styled.header`
   }
 `;
 
-export const PlayButton = styled(Link)`
+export const PlayButton = styled.button`
   font-weight: 500;
   font-size: 2rem;
 
   color: ${({ theme }) => theme.colors.darkBackground};
 
   background-color: ${({ theme }) => theme.colors.primary};
+
+  border-radius: ${({ theme }) => theme.rounded.md};
 
   padding: 1.25rem;
 

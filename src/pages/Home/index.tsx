@@ -1,8 +1,24 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { LoadingSplash } from "../../components";
+import { GameContextType } from "../../context/game/game.types";
+import { GameContext } from "../../context/game/gameContext";
 import { Container, Footer, HeadlineContainer, PlayButton } from "./styles";
 
 const HomePage = () => {
+  const { startGame, isLoading } = useContext(GameContext) as GameContextType;
+
+  const navigate = useNavigate();
+
+  const handlePlay = async () => {
+    await startGame();
+    navigate("/game");
+  };
+
   return (
     <Container>
+      <LoadingSplash isOpen={isLoading} />
       <HeadlineContainer>
         <img src="/images/lol-logo.png" />
 
@@ -14,7 +30,9 @@ const HomePage = () => {
         Guess who is the champion according to their skills or synopsis.
       </span>
 
-      <PlayButton to="/game">Play</PlayButton>
+      <PlayButton type="button" onClick={handlePlay}>
+        Play
+      </PlayButton>
 
       <Footer>
         <address>

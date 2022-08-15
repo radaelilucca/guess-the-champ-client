@@ -48,11 +48,9 @@ export const Question = styled.h1`
 
   text-align: center;
 
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 
   display: block;
-
-  border: 2px solid red;
 
   height: 20%;
 `;
@@ -60,8 +58,6 @@ export const Question = styled.h1`
 export const ChampContentContainer = styled.div`
   height: 40%;
   width: 100%;
-
-  border: 2px solid red;
 
   display: flex;
   flex-direction: column;
@@ -80,9 +76,10 @@ export const ChampContentContainer = styled.div`
 
   span {
     font-size: 1.4rem;
-    line-height: 2rem;
+    line-height: 2.2rem;
     text-align: center;
-    color: ${({ theme }) => theme.colors.lightText};
+    color: ${({ theme }) => theme.colors.secondary};
+    font-weight: 300;
   }
 `;
 
