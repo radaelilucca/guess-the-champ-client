@@ -10,7 +10,7 @@ const getRandomEmoteImage = () => {
 
   const emoteSRC = baseSRC.replace(/EMOTENAME/, emoteName);
 
-  return emoteSRC;
+  return { name: emoteName, src: emoteSRC };
 };
 
 export { getRandomEmoteImage };
