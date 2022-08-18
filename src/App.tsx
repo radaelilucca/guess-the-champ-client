@@ -13,7 +13,8 @@ function App() {
       <GlobalStyles />
       <ToastContainer
         position="bottom-center"
-        autoClose={3000}
+        pauseOnHover={false}
+        autoClose={2200}
         theme="dark"
         newestOnTop
         toastStyle={{
