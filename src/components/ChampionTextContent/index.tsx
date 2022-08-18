@@ -1,11 +1,14 @@
 import { TextParagraph } from "./styles";
 
-const ChampionTextContent = () => {
-  const content =
-    "Lux's damaging spells charge the target with energy for a few seconds. Lux's next attack ignites the energy, dealing bonus magic damage (depending on Lux's level) to the target.";
+interface IChampionTextContentProps {
+  content: string;
+  championName: string;
+}
 
-  const championName = "Lux";
-
+const ChampionTextContent = ({
+  content,
+  championName,
+}: IChampionTextContentProps) => {
   const regex = new RegExp(championName, "g");
 
   const parsedContent = content.replace(
