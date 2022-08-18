@@ -11,6 +11,7 @@ declare module "styled-components" {
       darkBackground: string;
       darkText: string;
       lightText: string;
+      black: string;
     };
     fontFamily: {
       poppins: string;

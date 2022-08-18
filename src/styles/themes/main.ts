@@ -6,6 +6,7 @@ const mainTheme = {
     darkBackground: "#121212",
     darkText: "#41414D",
     lightText: "#fff",
+    black: "#000",
   },
   fontFamily: {
     poppins: "Poppins, sans-serif",
