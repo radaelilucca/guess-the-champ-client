@@ -2,8 +2,8 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
 .app-wrapper {
-  
-
+  position: relative;
+  max-width: 500px;
 
   height: 100%;
   width: 100%;
@@ -13,6 +13,7 @@ export const GlobalStyles = createGlobalStyle`
 
   justify-content: center;
   align-items:center;
+  background-color: ${(props) => props.theme.colors.darkBackground};
 
   font-family: ${(props) => props.theme.fontFamily.poppins}; 
   
@@ -38,7 +39,8 @@ export const GlobalStyles = createGlobalStyle`
       width: 100%;
       flex: 1;
 
-      background-color: ${(props) => props.theme.colors.darkBackground};
+
+      background-color: ${(props) => props.theme.colors.darkText};
 
   }
 
@@ -47,5 +49,7 @@ export const GlobalStyles = createGlobalStyle`
     width: 100vw;
 
     display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
