@@ -1,24 +1,36 @@
-import { useContext } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { LoadingSplash } from "../../components";
-import { GameContextType } from "../../context/game/game.types";
-import { GameContext } from "../../context/game/gameContext";
-import { Container, Footer, HeadlineContainer, PlayButton } from "./styles";
+
+import { useGameState } from "../../hooks";
+
+import {
+  Container,
+  DescriptionContainer,
+  Footer,
+  HeadlineContainer,
+  PlayButton,
+  PlayButtonContainer,
+} from "./styles";
 
 const HomePage = () => {
-  const { startGame, isLoading } = useContext(GameContext) as GameContextType;
+  const { gameState, handleCreateMatch } = useGameState();
 
   const navigate = useNavigate();
 
   const handlePlay = async () => {
-    await startGame();
-    navigate("/game");
+    try {
+      await handleCreateMatch();
+      navigate("/game");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <Container>
-      <LoadingSplash isOpen={isLoading} />
+      <LoadingSplash isOpen={gameState.isLoading} />
       <HeadlineContainer>
         <img src="/images/lol-logo.png" />
 
@@ -26,13 +38,17 @@ const HomePage = () => {
         <h5>A League of Legends guessing game!</h5>
       </HeadlineContainer>
 
-      <span className="description">
-        Guess who is the champion according to their skills or synopsis.
-      </span>
+      <DescriptionContainer>
+        <span>
+          Guess who is the champion according to their skills or synopsis.
+        </span>
+      </DescriptionContainer>
 
-      <PlayButton type="button" onClick={handlePlay}>
-        Play
-      </PlayButton>
+      <PlayButtonContainer>
+        <PlayButton type="button" onClick={handlePlay}>
+          play
+        </PlayButton>
+      </PlayButtonContainer>
 
       <Footer>
         <address>

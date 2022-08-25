@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.main`
@@ -6,64 +5,80 @@ export const Container = styled.main`
   flex-direction: column;
   align-items: center;
 
-  color: ${({ theme }) => theme.colors.primary};
+  height: 100%;
 
   padding: 2rem;
   padding-top: 2.5rem;
 
-  height: 100%;
-
-  .description {
-    margin-top: 6.25rem;
-    font-weight: 300;
-    font-size: 1.5rem;
-  }
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const HeadlineContainer = styled.header`
   display: flex;
   flex-direction: column;
-  align-items: center;
+
+  width: 100%;
 
   h1 {
-    font-size: 3.5rem;
+    font-size: 3.2rem;
     font-weight: 600;
-
-    text-align: left;
-    width: 100%;
   }
 
   h5 {
     font-size: 1.5rem;
+    font-weight: 400;
   }
 
   img {
     max-height: 7rem;
     max-width: 4.5rem;
 
-    margin-bottom: 2rem;
+    margin: 1rem auto;
+    margin-bottom: 20%;
   }
 `;
 
-export const PlayButton = styled.button`
-  font-weight: 500;
-  font-size: 2rem;
+export const DescriptionContainer = styled.div`
+  flex: 1;
 
-  color: ${({ theme }) => theme.colors.darkBackground};
+  display: grid;
+  place-items: center;
 
-  background-color: ${({ theme }) => theme.colors.primary};
+  span {
+    font-weight: 300;
+    font-size: 1.5rem;
+  }
+`;
 
-  border-radius: ${({ theme }) => theme.rounded.md};
-
-  padding: 1.25rem;
-
+export const PlayButtonContainer = styled.div`
+  flex: 1 1;
   width: 100%;
 
+  display: grid;
+  place-items: center;
+`;
+
+export const PlayButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
 
-  margin-top: 6.25rem;
+  width: 100%;
+
+  padding: 1.25rem;
+
+  font-weight: 500;
+  font-size: 2rem;
+  font-family: ${({ theme }) => theme.fontFamily.poppins};
+
+  color: ${({ theme }) => theme.colors.black};
+
+  cursor: pointer;
+
+  border: none;
+  border-radius: ${({ theme }) => theme.rounded.md};
+
+  background-color: ${({ theme }) => theme.colors.primary};
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.secondary};
@@ -72,4 +87,9 @@ export const PlayButton = styled.button`
 
 export const Footer = styled.footer`
   margin-top: auto;
+
+  a {
+    text-decoration: none;
+    color: ${({ theme }) => theme.colors.primary};
+  }
 `;

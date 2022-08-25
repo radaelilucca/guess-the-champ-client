@@ -1,4 +1,4 @@
-import reactSelect from "react-select";
+import ReactSelect from "react-select";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -7,6 +7,7 @@ export const Container = styled.div`
   align-items: center;
 
   height: 100%;
+  overflow: hidden;
   padding: 2rem;
 
   position: relative;
@@ -28,6 +29,7 @@ export const ClueButton = styled.button`
 
   height: 3rem;
   width: 3rem;
+  opacity: 0.45;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.secondary};
@@ -74,7 +76,8 @@ export const ChampContentContainer = styled.div`
     border: ${({ theme }) => `0.125rem solid ${theme.colors.primary}`};
   }
 
-  span {
+  span,
+  p {
     font-size: 1.4rem;
     line-height: 2.2rem;
     text-align: center;
@@ -83,7 +86,7 @@ export const ChampContentContainer = styled.div`
   }
 `;
 
-export const ChampionSelect = styled(reactSelect)`
+export const ChampionSelect = styled(ReactSelect)`
   width: 100%;
 
   font-size: 1.2rem;

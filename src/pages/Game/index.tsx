@@ -1,12 +1,8 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import {
-  ChampionsContext,
-  ChampionsContextType,
-} from "../../context/champions";
+import { ChampionTextContent } from "../../components";
 
-import { GameContextType } from "../../context/game/game.types";
-import { GameContext } from "../../context/game/gameContext";
+import { useAntiCheat, useGameState } from "../../hooks";
 
 import {
   ChampContentContainer,
@@ -49,38 +45,44 @@ const ScoreItem = ({ label, hits, enabledStars }: IScoreItemProps) => {
 };
 
 const GameView = () => {
-  const { gameState } = useContext(GameContext) as GameContextType;
-  const { champions } = useContext(ChampionsContext) as ChampionsContextType;
+  const { gameState, handleGuess } = useGameState();
 
-  useEffect(() => {
-    console.log({ gameState });
-  }, []);
+  const { currentMatchData, availableChampions = [] } = gameState;
 
-  const championsOptions = champions.map(({ name }) => ({
-    value: name,
+  const { cheatsAttempts, maxAttempts } = useAntiCheat();
+
+  const championsOptions = availableChampions.map(({ name, key }) => ({
+    value: key,
     label: name,
   }));
+
+  useEffect(() => {
+    console.log(gameState);
+  }, []);
+  const handleChampionSelect = (newValue: any) => {
+    handleGuess(newValue.value as string);
+  };
 
   const renderChampionContent = () => {
     let textContent = "";
     let imageSRC = "";
 
-    const { guessingMode } = gameState;
+    const { guessingMode, champion, passive, randomAbility } = currentMatchData;
 
     switch (guessingMode.name) {
       case "ability":
-        textContent = gameState.randomSpell.description;
-        imageSRC = gameState.randomSpell.imageSRC;
+        textContent = randomAbility.description;
+        imageSRC = randomAbility.imageSRC;
 
         break;
 
       case "passive":
-        textContent = gameState.passive.description;
-        imageSRC = gameState.passive.imageSRC;
+        textContent = passive.description;
+        imageSRC = passive.imageSRC;
         break;
 
       case "blurb":
-        textContent = gameState.currentChampion.blurb;
+        textContent = champion.descriptions.blurb;
 
       default:
         break;
@@ -88,15 +90,20 @@ const GameView = () => {
 
     return (
       <ChampContentContainer>
-        {guessingMode.subMode === "description" && <span>{textContent}</span>}
+        {guessingMode.subMode === "description" && (
+          <ChampionTextContent
+            content={textContent}
+            championName={champion.name}
+          />
+        )}
         {guessingMode.subMode === "image" && (
           <img src={imageSRC} alt="champion spell" />
         )}
       </ChampContentContainer>
     );
   };
-
-  if (!gameState.inProgress) return <Navigate to="/" />;
+  if (cheatsAttempts >= maxAttempts) return <Navigate to="/" />;
+  if (!currentMatchData) return <Navigate to="/" />;
 
   return (
     <Container>
@@ -104,7 +111,7 @@ const GameView = () => {
         <img src="/icons/tip-icon.svg" />
       </ClueButton>
 
-      <Question>{gameState.question}</Question>
+      <Question>{currentMatchData.question}</Question>
 
       {renderChampionContent()}
 
@@ -112,6 +119,7 @@ const GameView = () => {
         options={championsOptions}
         className="champ-select"
         classNamePrefix="champ-select"
+        onChange={handleChampionSelect}
       />
 
       {/* <ScoresContainer>
