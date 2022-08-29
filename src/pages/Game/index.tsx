@@ -44,7 +44,7 @@ const ScoreItem = ({ label, hits, enabledStars }: IScoreItemProps) => {
   );
 };
 
-const GameView = () => {
+const GamePage = () => {
   const { gameState, handleGuess } = useGameState();
 
   const { currentMatchData, availableChampions = [] } = gameState;
@@ -137,4 +137,4 @@ const GameView = () => {
   );
 };
 
-export { GameView };
+export { GamePage };
