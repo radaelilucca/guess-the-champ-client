@@ -43,8 +43,6 @@ export const Form = styled.form`
 `;
 
 export const CustomInput = styled(Input)`
-  position: relative;
-
   width: 100%;
 `;
 
