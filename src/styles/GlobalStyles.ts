@@ -19,6 +19,7 @@ export const GlobalStyles = createGlobalStyle`
   
   * {
       transition: all 150ms ease;
+      font-family: ${(props) => props.theme.fontFamily.poppins}; 
     }
   }
 
