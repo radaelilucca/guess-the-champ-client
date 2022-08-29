@@ -20,18 +20,20 @@ export const HeadlineContainer = styled.header`
   width: 100%;
 
   h1 {
-    font-size: 3.2rem;
+    font-size: 3.5rem;
     font-weight: 600;
+    line-height: 3.2rem;
+    margin-bottom: 1rem;
   }
 
   h5 {
     font-size: 1.5rem;
-    font-weight: 400;
+    font-weight: 300;
   }
 
   img {
-    max-height: 7rem;
-    max-width: 4.5rem;
+    height: 7.5rem;
+    width: 7.5rem;
 
     margin: 1rem auto;
     margin-bottom: 20%;
@@ -45,8 +47,9 @@ export const DescriptionContainer = styled.div`
   place-items: center;
 
   span {
-    font-weight: 300;
+    font-weight: 200;
     font-size: 1.5rem;
+    line-height: 2rem;
   }
 `;
 
@@ -64,8 +67,9 @@ export const PlayButton = styled.button`
   align-items: center;
 
   width: 100%;
+  height: 4rem;
 
-  padding: 1.25rem;
+  padding: 0 1.25rem;
 
   font-weight: 500;
   font-size: 2rem;
@@ -88,8 +92,43 @@ export const PlayButton = styled.button`
 export const Footer = styled.footer`
   margin-top: auto;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-weight: 200;
+
+  address {
+    font-style: normal;
+  }
+
   a {
     text-decoration: none;
     color: ${({ theme }) => theme.colors.primary};
+    position: relative;
+
+    &:after {
+      content: " ";
+      height: 1.5px;
+      background-color: ${({ theme }) => theme.colors.primary};
+
+      position: absolute;
+      width: 0%;
+      bottom: 0;
+      left: 0;
+
+      transition: width 350ms ease-in-out;
+    }
+
+    &:hover {
+      &:after {
+        width: 100%;
+      }
+    }
+  }
+
+  span {
+    font-weight: 100;
+    font-size: 0.9rem;
   }
 `;
