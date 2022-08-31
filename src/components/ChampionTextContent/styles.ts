@@ -5,6 +5,11 @@ interface ITextParagraphProps {
 }
 
 export const TextParagraph = styled.p<ITextParagraphProps>`
+  height: 100%;
+  overflow-y: auto;
+
+  padding: 0 0.3rem;
+
   anti-cheat {
     border-radius: ${({ theme }) => theme.rounded.md};
 
