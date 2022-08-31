@@ -1,18 +1,11 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useMountEffect } from './useMountEffect';
 
 const maxAttempts = 5;
+
 const useAntiCheat = () => {
   const [attempts, setAttempts] = useState(0);
-
-  const messages = {
-    default: 'Looks like you are trying to cheat... 🤔',
-    warning: `Repeat this action ${
-      maxAttempts - attempts
-    } more times will abort the current match.`,
-    lastAdvice:
-      'Repeat this action again and this match will disappear like an ADC in front of a fed Zed...',
-  };
 
   const contextMenuWatcher = (e: MouseEvent) => {
     e.preventDefault();
@@ -48,6 +41,15 @@ const useAntiCheat = () => {
 
     if (attempts >= maxAttempts) return;
 
+    const messages = {
+      default: 'Looks like you are trying to cheat... 🤔',
+      warning: `Repeat this action ${
+        maxAttempts - attempts
+      } more times will abort the current match.`,
+      lastAdvice:
+        'Repeat this action again and this match will disappear like an ADC in front of a fed Zed...',
+    };
+
     if (attempts < 3) {
       toast(messages.default);
     } else if (attempts + 1 < maxAttempts) {
@@ -57,7 +59,7 @@ const useAntiCheat = () => {
     }
   }, [attempts]);
 
-  useEffect(() => {
+  useMountEffect(() => {
     const allowCheats = import.meta.env.VITE_ALLOW_CHEATS === 'true';
 
     if (!allowCheats) {
@@ -69,7 +71,8 @@ const useAntiCheat = () => {
         removeEventListeners();
       }
     };
-  }, []);
+  });
+
   return {
     cheatsAttempts: attempts,
     maxAttempts,

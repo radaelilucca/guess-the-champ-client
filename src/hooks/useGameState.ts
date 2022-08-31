@@ -1,4 +1,5 @@
 import { AES, enc } from 'crypto-js';
+import { useCallback } from 'react';
 
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
@@ -13,8 +14,6 @@ const useGameState = () => {
   const setUserState = useSetRecoilState(userStateAtom);
 
   const navigate = useNavigate();
-
-  const handleLoading = (state: boolean) => setGameState((prev) => ({ ...prev, isLoading: state }));
 
   const handleGuess = async (championKey: string) => {
     try {
@@ -74,9 +73,8 @@ const useGameState = () => {
     }
   };
 
-  const getAvailableChampions = async () => {
-    handleLoading(true);
-
+  const getAvailableChampions = useCallback(async () => {
+    setGameState((prev) => ({ ...prev, isLoading: true }));
     try {
       const response = await guessTheChampApi.client.get('/champs');
 
@@ -94,7 +92,7 @@ const useGameState = () => {
         isLoading: false,
       }));
     }
-  };
+  }, [setGameState]);
 
   // TODO: FILTER PIXELADO NAS IMGS EM MODO HARD;
   //TODO: FOCUS INPUT

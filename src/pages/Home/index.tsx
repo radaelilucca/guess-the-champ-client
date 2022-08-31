@@ -38,7 +38,7 @@ const HomePage = () => {
       <IoLogOut size={40} onClick={handleLogout} />
       <LoadingSplash isOpen={gameState.isLoading} />
       <HeadlineContainer>
-        <img src='/images/logo.png' />
+        <img src='/images/logo.png' alt='Guess the Champion Logo' />
 
         <h1>{APP_CONTENT.title}</h1>
         <h5>{APP_CONTENT.blurb}</h5>

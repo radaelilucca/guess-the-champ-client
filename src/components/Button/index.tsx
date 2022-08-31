@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { Container } from './styles';
 
-interface IButtonProps extends ButtonHTMLAttributes<{}> {
+interface IButtonProps extends ButtonHTMLAttributes<any> {
   children: ReactNode;
   className?: string;
 }

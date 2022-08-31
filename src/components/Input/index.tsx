@@ -1,9 +1,9 @@
-import { InputHTMLAttributes, useRef, useState } from 'react';
+import { InputHTMLAttributes, useState } from 'react';
 import { Container, InputElement, Label, ToggleVisibilityButton, TopContainer } from './styles';
 
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 
-interface IInputProps extends InputHTMLAttributes<{}> {
+interface IInputProps extends InputHTMLAttributes<any> {
   label?: string;
   onChange: (newValue: any) => void;
   className?: string;

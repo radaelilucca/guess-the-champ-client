@@ -18,7 +18,7 @@ const PrivateRoutes = () => {
     if (isAuthenticated) {
       getAvailableChampions();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, getAvailableChampions]);
 
   return (
     <Routes>

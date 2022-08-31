@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useEffect, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
 import { LoadingSplash } from '../../components';
 import { AuthContext } from '../../context';
@@ -48,7 +48,7 @@ const LoginPage = () => {
       <LoadingSplash isOpen={isLoading} />
 
       <Header>
-        <img src='/images/logo.png' />
+        <img src='/images/logo.png' alt='Guess the Champion Logo' />
         <h1>Welcome back!</h1>
       </Header>
 
@@ -74,7 +74,7 @@ const LoginPage = () => {
         <SubmitButton type='submit'>sign in</SubmitButton>
 
         <SignUpButton type='button' onClick={handleNavigateToSignUp}>
-          doesn't have an account? sign up here!
+          doesn&apos;t have an account? sign up here!
         </SignUpButton>
       </Form>
     </Container>

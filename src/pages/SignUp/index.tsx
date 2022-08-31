@@ -28,7 +28,7 @@ const SignUpPage = () => {
   return (
     <Container>
       <Header>
-        <img src='/images/logo.png' />
+        <img src='/images/logo.png' alt='Guess the Champion Logo' />
         <h1>Sign up!</h1>
       </Header>
 

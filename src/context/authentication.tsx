@@ -1,7 +1,7 @@
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import { createContext, ReactNode, useCallback, useEffect, useState } from 'react';
 
 import { toast } from 'react-toastify';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { guessTheChampApi } from '../services';
 import { userStateAtom } from '../state';
 
@@ -115,20 +115,23 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     } as AuthStateType);
   };
 
-  const getUserProfile = async (username: string) => {
-    const response = await guessTheChampApi.client.get(`/users/${username}`);
-    console.log(response.data);
+  const getUserProfile = useCallback(
+    async (username: string) => {
+      const response = await guessTheChampApi.client.get(`/users/${username}`);
+      console.log(response.data);
 
-    const { user } = response.data;
+      const { user } = response.data;
 
-    setUserState({
-      id: user.id,
-      username: user.username,
-      scores: {
-        total: user.totalScore,
-      },
-    });
-  };
+      setUserState({
+        id: user.id,
+        username: user.username,
+        scores: {
+          total: user.totalScore,
+        },
+      });
+    },
+    [setUserState],
+  );
 
   useEffect(() => {
     const token = localStorage.getItem('@token');
@@ -151,7 +154,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (authState.isAuthenticated && authState.user) {
       getUserProfile(authState.user?.id);
     }
-  }, [authState.isAuthenticated, authState.user]);
+  }, [authState.isAuthenticated, authState.user, getUserProfile]);
 
   const value = { authState, handleLogin, handleLogout, handleSignUp };
 

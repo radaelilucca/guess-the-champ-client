@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { ChampionTextContent } from '../../components';
@@ -12,40 +11,38 @@ import {
   ClueButton,
   Container,
   Question,
-  ScoreItemContainer,
-  ScoresContainer,
-  ScoresList,
   UserInfoContainer,
 } from './styles';
 
-interface IScoreItemProps {
-  label: string;
-  enabledStars: number;
-  hits: number;
-}
-const ScoreItem = ({ label, hits, enabledStars }: IScoreItemProps) => {
-  const enabled = 'icons/star-icon.svg';
-  const disabled = 'icons/disabled-star-icon.svg';
+// interface IScoreItemProps {
+//   label: string;
+//   enabledStars: number;
+//   hits: number;
+// }
 
-  const stars = Array(3)
-    .fill('')
-    .map((_, index) => (index + 1 <= enabledStars ? enabled : disabled))
-    .reverse();
+// const ScoreItem = ({ label, hits, enabledStars }: IScoreItemProps) => {
+//   const enabled = 'icons/star-icon.svg';
+//   const disabled = 'icons/disabled-star-icon.svg';
 
-  return (
-    <ScoreItemContainer>
-      <div className='texts'>
-        <strong>{label}</strong>
-        <span>{hits} hits</span>
-      </div>
-      <div className='start-icons-container'>
-        {stars.map((src, index) => (
-          <img key={`${src}-${index}`} src={src} />
-        ))}
-      </div>
-    </ScoreItemContainer>
-  );
-};
+//   const stars = Array(3)
+//     .fill('')
+//     .map((_, index) => (index + 1 <= enabledStars ? enabled : disabled))
+//     .reverse();
+
+//   return (
+//     <ScoreItemContainer>
+//       <div className='texts'>
+//         <strong>{label}</strong>
+//         <span>{hits} hits</span>
+//       </div>
+//       <div className='start-icons-container'>
+//         {stars.map((src, index) => (
+//           <img key={`${src}-${index}`} src={src} alt='score star icon' />
+//         ))}
+//       </div>
+//     </ScoreItemContainer>
+//   );
+// };
 
 const UserInfo = () => {
   const { username, scores } = useRecoilValue(userStateAtom);
@@ -95,6 +92,7 @@ const GamePage = () => {
 
       case 'blurb':
         textContent = champion.descriptions.blurb;
+        break;
 
       default:
         break;
@@ -115,7 +113,7 @@ const GamePage = () => {
   return (
     <Container>
       <ClueButton type='button' disabled>
-        <img src='/icons/tip-icon.svg' />
+        <img src='/icons/tip-icon.svg' alt='Tip icon on button' />
       </ClueButton>
 
       <UserInfo />
