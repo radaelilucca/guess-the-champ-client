@@ -67,6 +67,10 @@ export const ForgotPasswordButton = styled(BaseRedirectButton)`
   font-size: 0.9rem;
   margin-left: auto;
   margin-top: 0.2rem;
+
+  &:disabled {
+    color: ${({ theme }) => theme.colors.darkText};
+  }
 `;
 
 export const SubmitButton = styled(Button)`

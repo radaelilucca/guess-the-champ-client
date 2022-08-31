@@ -71,7 +71,9 @@ const LoginPage = () => {
           onChange={(newValue) => setFormValues((prev) => ({ ...prev, password: newValue }))}
         />
 
-        <ForgotPasswordButton>forgot your password?</ForgotPasswordButton>
+        <ForgotPasswordButton type='button' disabled>
+          forgot your password?
+        </ForgotPasswordButton>
 
         <SubmitButton type='submit'>sign in</SubmitButton>
 
