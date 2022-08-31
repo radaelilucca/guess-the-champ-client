@@ -1,4 +1,5 @@
-import { emotes } from '../const';
+import { emotes } from '~/const';
+
 import { getRandomNumberInRange } from './randomNumberInRange';
 
 const getRandomEmoteImage = () => {

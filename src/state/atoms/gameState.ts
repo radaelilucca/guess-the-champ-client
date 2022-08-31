@@ -1,6 +1,7 @@
 import { atom } from 'recoil';
-import { MatchDataType } from '../../types';
-import { ChampionListItem } from '../../types/shared/championListItem.type';
+
+import { MatchDataType } from '~/types';
+import { ChampionListItem } from '~/types/shared/championListItem.type';
 
 type GameStateType = {
   isLoading: boolean;

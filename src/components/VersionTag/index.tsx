@@ -1,10 +1,11 @@
+import { version } from '~/../package.json';
+
 import { Container } from './styles';
-import config from '../../../package.json';
 
 const VersionTag = () => {
   return (
     <Container>
-      <span>Version: {config.version}</span>
+      <span>Version: {version}</span>
     </Container>
   );
 };

@@ -1,6 +1,7 @@
 import { FormEvent, useContext, useState } from 'react';
 import { Navigate } from 'react-router';
-import { AuthContext } from '../../context';
+
+import { AuthContext } from '~/context';
 
 import { Container, Header, Form, SubmitButton, SignInButton, CustomInput } from './styles';
 

@@ -1,8 +1,9 @@
 import { FormEvent, useContext, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
+
+import { LoadingSplash } from '~/components';
+import { AuthContext } from '~/context';
 import { verbose } from '~/utils';
-import { LoadingSplash } from '../../components';
-import { AuthContext } from '../../context';
 
 import {
   Container,

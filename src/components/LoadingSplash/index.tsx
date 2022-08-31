@@ -1,4 +1,5 @@
-import { getRandomEmoteImage } from '../../utils';
+import { getRandomEmoteImage } from '~/utils';
+
 import { Container, Spinner, LoadingText, EmoteImage } from './styles';
 
 interface ILoadingSplash {

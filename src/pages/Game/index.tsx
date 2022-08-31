@@ -1,9 +1,10 @@
 import { Navigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { ChampionTextContent } from '../../components';
 
-import { useAntiCheat, useGameState } from '../../hooks';
-import { userStateAtom } from '../../state';
+import { useRecoilValue } from 'recoil';
+
+import { ChampionTextContent } from '~/components';
+import { useAntiCheat, useGameState } from '~/hooks';
+import { userStateAtom } from '~/state';
 
 import {
   ChampContentContainer,

@@ -1,13 +1,15 @@
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
+
 import 'react-toastify/dist/ReactToastify.css';
 
-import { PagesRoutes } from './Routes';
-import { GlobalStyles } from './styles';
-import { mainTheme } from './styles/themes';
 import { RecoilRoot } from 'recoil';
-import { AuthProvider } from './context';
-import { VersionTag } from './components';
+
+import { VersionTag } from '~/components';
+import { AuthProvider } from '~/context';
+import { GlobalStyles, mainTheme } from '~/styles';
+
+import { PagesRoutes } from './Routes';
 
 function App() {
   return (

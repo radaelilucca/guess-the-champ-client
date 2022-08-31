@@ -1,5 +1,6 @@
-import { gameQuestions } from '../const';
-import { GuessingModeNamesType } from '../context/game/game.types';
+import { gameQuestions } from '~/const';
+import { GuessingModeNamesType } from '~/types';
+
 import { getRandomNumberInRange } from './randomNumberInRange';
 
 const getRandomQuestion = (guessingMode: GuessingModeNamesType) => {

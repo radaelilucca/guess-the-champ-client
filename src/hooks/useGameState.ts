@@ -1,13 +1,14 @@
-import { AES, enc } from 'crypto-js';
 import { useCallback } from 'react';
-
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
+
+import { AES, enc } from 'crypto-js';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+
+import { guessTheChampApi } from '~/services';
+import { gameStateAtom, userStateAtom } from '~/state';
+import { MatchDataType } from '~/types';
 import { verbose } from '~/utils';
-import { guessTheChampApi } from '../services';
-import { gameStateAtom, userStateAtom } from '../state';
-import { MatchDataType } from '../types';
 
 const useGameState = () => {
   const [gameState, setGameState] = useRecoilState(gameStateAtom);

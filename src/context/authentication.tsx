@@ -1,9 +1,10 @@
 import { createContext, ReactNode, useCallback, useEffect, useState } from 'react';
-
 import { toast } from 'react-toastify';
+
 import { useSetRecoilState } from 'recoil';
-import { guessTheChampApi } from '../services';
-import { userStateAtom } from '../state';
+
+import { guessTheChampApi } from '~/services';
+import { userStateAtom } from '~/state';
 
 type AuthStateType = {
   isAuthenticated: boolean;

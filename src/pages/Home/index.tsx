@@ -1,11 +1,13 @@
-import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
 import { IoLogOut } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 
-import { LoadingSplash } from '../../components';
-import { APP_CONTENT } from '../../const';
+import { LoadingSplash } from '~/components';
+import { APP_CONTENT } from '~/const';
+import { useGameState } from '~/hooks';
+import { verbose } from '~/utils';
 
-import { useGameState } from '../../hooks';
-
+import { AuthContext } from '../../context';
 import {
   Container,
   DescriptionContainer,
@@ -14,9 +16,6 @@ import {
   PlayButton,
   PlayButtonContainer,
 } from './styles';
-import { useContext } from 'react';
-import { AuthContext } from '../../context';
-import { verbose } from '~/utils';
 
 const HomePage = () => {
   const { gameState, handleCreateMatch } = useGameState();

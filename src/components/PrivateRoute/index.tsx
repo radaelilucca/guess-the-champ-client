@@ -1,6 +1,7 @@
-import { Navigate } from 'react-router';
 import { ReactElement, useContext } from 'react';
-import { AuthContext } from '../../context';
+import { Navigate } from 'react-router';
+
+import { AuthContext } from '~/context';
 
 interface IPrivateRouteProps {
   children: ReactElement;
