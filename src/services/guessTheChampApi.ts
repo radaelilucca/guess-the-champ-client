@@ -28,7 +28,6 @@ class Client {
   }
 
   setIsAuthenticated(value: boolean) {
-    console.log('CHANGE AUTHENTICATION VALUE');
     this.isAuthenticated = value;
   }
 }

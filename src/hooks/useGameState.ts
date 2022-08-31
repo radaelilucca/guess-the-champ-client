@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import { verbose } from '~/utils';
 import { guessTheChampApi } from '../services';
 import { gameStateAtom, userStateAtom } from '../state';
 import { MatchDataType } from '../types';
@@ -42,7 +43,7 @@ const useGameState = () => {
         }));
       } else toast.error('Miss 😢');
     } catch (error) {
-      console.error(error);
+      verbose.error({ id: 'Error on Guess request', data: error });
       toast.error('Error on submit');
     }
   };
@@ -68,7 +69,8 @@ const useGameState = () => {
     } catch (error) {
       setGameState((prev) => ({ ...prev, isLoading: false }));
 
-      console.error('Error on game creation');
+      verbose.error({ id: 'Error on create match request', data: error });
+
       toast.error('Error on game creation. :/');
     }
   };
@@ -86,7 +88,8 @@ const useGameState = () => {
         isLoading: false,
       }));
     } catch (error) {
-      console.error('ERROR ON GET AVAILABLE CHAMPS!');
+      verbose.error({ id: 'Error on Get Champions request', data: error });
+
       setGameState((prev) => ({
         ...prev,
         isLoading: false,

@@ -16,6 +16,7 @@ import {
 } from './styles';
 import { useContext } from 'react';
 import { AuthContext } from '../../context';
+import { verbose } from '~/utils';
 
 const HomePage = () => {
   const { gameState, handleCreateMatch } = useGameState();
@@ -29,7 +30,7 @@ const HomePage = () => {
       await handleCreateMatch();
       navigate('/game');
     } catch (error) {
-      console.error(error);
+      verbose.error({ id: 'Error on Match Creation', data: error });
     }
   };
 

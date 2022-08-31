@@ -118,7 +118,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const getUserProfile = useCallback(
     async (username: string) => {
       const response = await guessTheChampApi.client.get(`/users/${username}`);
-      console.log(response.data);
 
       const { user } = response.data;
 

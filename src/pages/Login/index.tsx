@@ -1,5 +1,6 @@
 import { FormEvent, useContext, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
+import { verbose } from '~/utils';
 import { LoadingSplash } from '../../components';
 import { AuthContext } from '../../context';
 
@@ -35,7 +36,7 @@ const LoginPage = () => {
         password: formValues.password,
       });
     } catch (error) {
-      console.error('Error on login:', error);
+      verbose.error({ id: 'Error on Login request', data: error });
     }
   };
 
