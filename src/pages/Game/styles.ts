@@ -15,6 +15,14 @@ export const Container = styled.div`
   color: ${({ theme }) => theme.colors.lightText};
 `;
 
+export const UserInfoContainer = styled.div`
+  position: absolute;
+  bottom: 1rem;
+
+  display: flex;
+  gap: 1rem;
+`;
+
 export const ClueButton = styled.button`
   position: absolute;
   top: 0.75rem;

@@ -27,4 +27,5 @@ export type MatchDataType = {
     imageSRC: string;
   };
   gameplayTips: string[];
+  id: string;
 };

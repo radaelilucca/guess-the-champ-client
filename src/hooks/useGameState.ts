@@ -1,37 +1,72 @@
-import { useEffect } from "react";
+import { AES, enc } from "crypto-js";
+
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { guessTheChampApi } from "../services";
-import { gameStateAtom } from "../state";
+import { gameStateAtom, userStateAtom } from "../state";
+import { MatchDataType } from "../types";
 
 const useGameState = () => {
   const [gameState, setGameState] = useRecoilState(gameStateAtom);
+
+  const setUserState = useSetRecoilState(userStateAtom);
 
   const navigate = useNavigate();
 
   const handleLoading = (state: boolean) =>
     setGameState((prev) => ({ ...prev, isLoading: state }));
 
-  const handleGuess = (championKey: string) => {
-    if (championKey === gameState.currentMatchData.champion.key) {
-      toast.success("HIT!");
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
-    } else toast.error("Miss 😢");
+  const handleGuess = async (championKey: string) => {
+    try {
+      const response = await guessTheChampApi.client.post(
+        `/game/guess/${gameState.currentMatchData.id}`,
+        {
+          champion: championKey,
+        }
+      );
+
+      const { isCorrect, matchScore } = response.data;
+
+      if (isCorrect) {
+        toast.success("HIT!", {
+          closeOnClick: true,
+          autoClose: 1000,
+          onClose: () => navigate("/"),
+        });
+
+        setUserState((prev) => ({
+          ...prev,
+          scores: {
+            ...prev.scores,
+            total: prev.scores.total + Number(matchScore),
+          },
+        }));
+      } else toast.error("Miss 😢");
+    } catch (error) {
+      console.error(error);
+      toast.error("Error on submit");
+    }
   };
 
   const handleCreateMatch = async () => {
     try {
       setGameState((prev) => ({ ...prev, isLoading: true }));
-      const response = await guessTheChampApi.get("/game/create");
+      const response = await guessTheChampApi.client.get("/game/create");
 
-      const { game } = response.data;
+      const { matchData: encryptedMatchData, matchId } = response.data;
+
+      const key = import.meta.env.VITE_CRYPTO_KEY;
+
+      const bytes = AES.decrypt(encryptedMatchData, key);
+
+      const decryptedData = JSON.parse(
+        bytes.toString(enc.Utf8)
+      ) as MatchDataType;
 
       setGameState((prev) => ({
         ...prev,
-        currentMatchData: game,
+        currentMatchData: { ...decryptedData, id: matchId },
         isLoading: false,
       }));
     } catch (error) {
@@ -44,16 +79,25 @@ const useGameState = () => {
 
   const getAvailableChampions = async () => {
     handleLoading(true);
-    const response = await guessTheChampApi.get("/champs");
 
-    const availableChampions = response.data.champions;
+    try {
+      const response = await guessTheChampApi.client.get("/champs");
 
-    setGameState((prev) => ({ ...prev, availableChampions, isLoading: false }));
+      const availableChampions = response.data.champions;
+
+      setGameState((prev) => ({
+        ...prev,
+        availableChampions,
+        isLoading: false,
+      }));
+    } catch (error) {
+      console.error("ERROR ON GET AVAILABLE CHAMPS!");
+      setGameState((prev) => ({
+        ...prev,
+        isLoading: false,
+      }));
+    }
   };
-
-  useEffect(() => {
-    getAvailableChampions();
-  }, []);
 
   // TODO: FILTER PIXELADO NAS IMGS EM MODO HARD;
   //TODO: FOCUS INPUT

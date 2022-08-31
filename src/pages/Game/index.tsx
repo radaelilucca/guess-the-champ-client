@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { ChampionTextContent } from "../../components";
 
 import { useAntiCheat, useGameState } from "../../hooks";
+import { userStateAtom } from "../../state";
 
 import {
   ChampContentContainer,
@@ -13,6 +15,7 @@ import {
   ScoreItemContainer,
   ScoresContainer,
   ScoresList,
+  UserInfoContainer,
 } from "./styles";
 
 interface IScoreItemProps {
@@ -44,6 +47,18 @@ const ScoreItem = ({ label, hits, enabledStars }: IScoreItemProps) => {
   );
 };
 
+const UserInfo = () => {
+  const { username, scores } = useRecoilValue(userStateAtom);
+  return (
+    <UserInfoContainer>
+      <span>user: {username}</span>
+      <span>
+        total score: <strong>{scores.total}</strong>
+      </span>
+    </UserInfoContainer>
+  );
+};
+
 const GamePage = () => {
   const { gameState, handleGuess } = useGameState();
 
@@ -56,11 +71,8 @@ const GamePage = () => {
     label: name,
   }));
 
-  useEffect(() => {
-    console.log(gameState);
-  }, []);
   const handleChampionSelect = (newValue: any) => {
-    handleGuess(newValue.value as string);
+    handleGuess(newValue.label as string);
   };
 
   const renderChampionContent = () => {
@@ -110,6 +122,8 @@ const GamePage = () => {
       <ClueButton type="button" disabled>
         <img src="/icons/tip-icon.svg" />
       </ClueButton>
+
+      <UserInfo />
 
       <Question>{currentMatchData.question}</Question>
 
