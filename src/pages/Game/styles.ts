@@ -1,5 +1,5 @@
-import ReactSelect from "react-select";
-import styled from "styled-components";
+import ReactSelect from 'react-select';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;

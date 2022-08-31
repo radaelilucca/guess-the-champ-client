@@ -1,7 +1,7 @@
-import { FormEvent, useContext, useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router";
-import { LoadingSplash } from "../../components";
-import { AuthContext } from "../../context";
+import { FormEvent, useContext, useEffect, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router';
+import { LoadingSplash } from '../../components';
+import { AuthContext } from '../../context';
 
 import {
   Container,
@@ -11,12 +11,12 @@ import {
   SignUpButton,
   ForgotPasswordButton,
   CustomInput,
-} from "./styles";
+} from './styles';
 
 const LoginPage = () => {
   const [formValues, setFormValues] = useState({
-    user: "",
-    password: "",
+    user: '',
+    password: '',
   });
 
   const {
@@ -35,20 +35,20 @@ const LoginPage = () => {
         password: formValues.password,
       });
     } catch (error) {
-      console.error("Error on login:", error);
+      console.error('Error on login:', error);
     }
   };
 
-  const handleNavigateToSignUp = () => navigate("/sign-up");
+  const handleNavigateToSignUp = () => navigate('/sign-up');
 
-  if (isAuthenticated) return <Navigate to="/" />;
+  if (isAuthenticated) return <Navigate to='/' />;
 
   return (
     <Container>
       <LoadingSplash isOpen={isLoading} />
 
       <Header>
-        <img src="/images/logo.png" />
+        <img src='/images/logo.png' />
         <h1>Welcome back!</h1>
       </Header>
 
@@ -56,28 +56,24 @@ const LoginPage = () => {
         <CustomInput
           required
           value={formValues.user}
-          label="nickname"
-          placeholder="nickname"
-          onChange={(newValue) =>
-            setFormValues((prev) => ({ ...prev, user: newValue }))
-          }
+          label='nickname'
+          placeholder='nickname'
+          onChange={(newValue) => setFormValues((prev) => ({ ...prev, user: newValue }))}
         />
         <CustomInput
           required
           value={formValues.password}
-          type="password"
-          label="password"
-          placeholder="password"
-          onChange={(newValue) =>
-            setFormValues((prev) => ({ ...prev, password: newValue }))
-          }
+          type='password'
+          label='password'
+          placeholder='password'
+          onChange={(newValue) => setFormValues((prev) => ({ ...prev, password: newValue }))}
         />
 
         <ForgotPasswordButton>forgot your password?</ForgotPasswordButton>
 
-        <SubmitButton type="submit">sign in</SubmitButton>
+        <SubmitButton type='submit'>sign in</SubmitButton>
 
-        <SignUpButton type="button" onClick={handleNavigateToSignUp}>
+        <SignUpButton type='button' onClick={handleNavigateToSignUp}>
           doesn't have an account? sign up here!
         </SignUpButton>
       </Form>

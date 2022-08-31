@@ -1,2 +1,2 @@
-export * from "./matchData.type";
-export * from "./guessingModes.type";
+export * from './matchData.type';
+export * from './guessingModes.type';

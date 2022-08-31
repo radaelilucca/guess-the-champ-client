@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import { IoLogOut } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
+import { IoLogOut } from 'react-icons/io5';
 
-import { LoadingSplash } from "../../components";
-import { APP_CONTENT } from "../../const";
+import { LoadingSplash } from '../../components';
+import { APP_CONTENT } from '../../const';
 
-import { useGameState } from "../../hooks";
+import { useGameState } from '../../hooks';
 
 import {
   Container,
@@ -13,9 +13,9 @@ import {
   HeadlineContainer,
   PlayButton,
   PlayButtonContainer,
-} from "./styles";
-import { useContext } from "react";
-import { AuthContext } from "../../context";
+} from './styles';
+import { useContext } from 'react';
+import { AuthContext } from '../../context';
 
 const HomePage = () => {
   const { gameState, handleCreateMatch } = useGameState();
@@ -27,7 +27,7 @@ const HomePage = () => {
   const handlePlay = async () => {
     try {
       await handleCreateMatch();
-      navigate("/game");
+      navigate('/game');
     } catch (error) {
       console.error(error);
     }
@@ -38,7 +38,7 @@ const HomePage = () => {
       <IoLogOut size={40} onClick={handleLogout} />
       <LoadingSplash isOpen={gameState.isLoading} />
       <HeadlineContainer>
-        <img src="/images/logo.png" />
+        <img src='/images/logo.png' />
 
         <h1>{APP_CONTENT.title}</h1>
         <h5>{APP_CONTENT.blurb}</h5>
@@ -49,15 +49,15 @@ const HomePage = () => {
       </DescriptionContainer>
 
       <PlayButtonContainer>
-        <PlayButton type="button" onClick={handlePlay}>
+        <PlayButton type='button' onClick={handlePlay}>
           play
         </PlayButton>
       </PlayButtonContainer>
 
       <Footer>
         <address>
-          Made with 💛 by{" "}
-          <a href="https://www.linkedin.com/in/luccaradaeli" target="_blank">
+          Made with 💛 by{' '}
+          <a href='https://www.linkedin.com/in/luccaradaeli' target='_blank' rel='noreferrer'>
             Lucca Radaeli!
           </a>
         </address>

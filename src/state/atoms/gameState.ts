@@ -1,6 +1,6 @@
-import { atom } from "recoil";
-import { MatchDataType } from "../../types";
-import { ChampionListItem } from "../../types/shared/championListItem.type";
+import { atom } from 'recoil';
+import { MatchDataType } from '../../types';
+import { ChampionListItem } from '../../types/shared/championListItem.type';
 
 type GameStateType = {
   isLoading: boolean;
@@ -9,7 +9,7 @@ type GameStateType = {
 };
 
 const gameStateAtom = atom({
-  key: "gameState",
+  key: 'gameState',
   default: {} as GameStateType,
 });
 

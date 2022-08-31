@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 class Client {
   client;
@@ -15,7 +15,7 @@ class Client {
   addAuthorizationHeaderInterceptor() {
     this.client.interceptors.request.use((request) => {
       if (this.isAuthenticated) {
-        const token = localStorage.getItem("@token");
+        const token = localStorage.getItem('@token');
 
         request.headers = {
           ...request.headers,
@@ -28,7 +28,7 @@ class Client {
   }
 
   setIsAuthenticated(value: boolean) {
-    console.log("CHANGE AUTHENTICATION VALUE");
+    console.log('CHANGE AUTHENTICATION VALUE');
     this.isAuthenticated = value;
   }
 }

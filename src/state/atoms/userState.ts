@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 type UserStateType = {
   id: string;
@@ -12,7 +12,7 @@ type UserStateType = {
 };
 
 const userStateAtom = atom({
-  key: "userState",
+  key: 'userState',
   default: {} as UserStateType,
 });
 

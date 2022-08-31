@@ -1,5 +1,5 @@
-const removeTags = (text: string = "") => {
-  const cleanText = text.replace(/\<(.+?)\>/g, "");
+const removeTags = (text = '') => {
+  const cleanText = text.replace(/\<(.+?)\>/g, '');
 
   return cleanText;
 };

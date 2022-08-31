@@ -1,1 +1,1 @@
-export * from "./guessTheChampApi";
+export * from './guessTheChampApi';

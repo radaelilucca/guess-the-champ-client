@@ -1,5 +1,5 @@
-import { Container } from "./styles";
-import config from "../../../package.json";
+import { Container } from './styles';
+import config from '../../../package.json';
 
 const VersionTag = () => {
   return (

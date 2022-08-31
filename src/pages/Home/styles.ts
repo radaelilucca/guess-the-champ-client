@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.main`
   display: flex;
@@ -124,7 +124,7 @@ export const Footer = styled.footer`
     position: relative;
 
     &:after {
-      content: " ";
+      content: ' ';
       height: 1.5px;
       background-color: ${({ theme }) => theme.colors.primary};
 

@@ -1,4 +1,4 @@
-import { GuessingModeType } from "./guessingModes.type";
+import { GuessingModeType } from './guessingModes.type';
 
 export type MatchDataType = {
   isLoading: boolean;

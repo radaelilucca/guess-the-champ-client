@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { ChampionTextContent } from "../../components";
+import { useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { ChampionTextContent } from '../../components';
 
-import { useAntiCheat, useGameState } from "../../hooks";
-import { userStateAtom } from "../../state";
+import { useAntiCheat, useGameState } from '../../hooks';
+import { userStateAtom } from '../../state';
 
 import {
   ChampContentContainer,
@@ -16,7 +16,7 @@ import {
   ScoresContainer,
   ScoresList,
   UserInfoContainer,
-} from "./styles";
+} from './styles';
 
 interface IScoreItemProps {
   label: string;
@@ -24,21 +24,21 @@ interface IScoreItemProps {
   hits: number;
 }
 const ScoreItem = ({ label, hits, enabledStars }: IScoreItemProps) => {
-  const enabled = "icons/star-icon.svg";
-  const disabled = "icons/disabled-star-icon.svg";
+  const enabled = 'icons/star-icon.svg';
+  const disabled = 'icons/disabled-star-icon.svg';
 
   const stars = Array(3)
-    .fill("")
+    .fill('')
     .map((_, index) => (index + 1 <= enabledStars ? enabled : disabled))
     .reverse();
 
   return (
     <ScoreItemContainer>
-      <div className="texts">
+      <div className='texts'>
         <strong>{label}</strong>
         <span>{hits} hits</span>
       </div>
-      <div className="start-icons-container">
+      <div className='start-icons-container'>
         {stars.map((src, index) => (
           <img key={`${src}-${index}`} src={src} />
         ))}
@@ -76,24 +76,24 @@ const GamePage = () => {
   };
 
   const renderChampionContent = () => {
-    let textContent = "";
-    let imageSRC = "";
+    let textContent = '';
+    let imageSRC = '';
 
     const { guessingMode, champion, passive, randomAbility } = currentMatchData;
 
     switch (guessingMode.name) {
-      case "ability":
+      case 'ability':
         textContent = randomAbility.description;
         imageSRC = randomAbility.imageSRC;
 
         break;
 
-      case "passive":
+      case 'passive':
         textContent = passive.description;
         imageSRC = passive.imageSRC;
         break;
 
-      case "blurb":
+      case 'blurb':
         textContent = champion.descriptions.blurb;
 
       default:
@@ -102,25 +102,20 @@ const GamePage = () => {
 
     return (
       <ChampContentContainer>
-        {guessingMode.subMode === "description" && (
-          <ChampionTextContent
-            content={textContent}
-            championName={champion.name}
-          />
+        {guessingMode.subMode === 'description' && (
+          <ChampionTextContent content={textContent} championName={champion.name} />
         )}
-        {guessingMode.subMode === "image" && (
-          <img src={imageSRC} alt="champion spell" />
-        )}
+        {guessingMode.subMode === 'image' && <img src={imageSRC} alt='champion spell' />}
       </ChampContentContainer>
     );
   };
-  if (cheatsAttempts >= maxAttempts) return <Navigate to="/" />;
-  if (!currentMatchData) return <Navigate to="/" />;
+  if (cheatsAttempts >= maxAttempts) return <Navigate to='/' />;
+  if (!currentMatchData) return <Navigate to='/' />;
 
   return (
     <Container>
-      <ClueButton type="button" disabled>
-        <img src="/icons/tip-icon.svg" />
+      <ClueButton type='button' disabled>
+        <img src='/icons/tip-icon.svg' />
       </ClueButton>
 
       <UserInfo />
@@ -131,8 +126,8 @@ const GamePage = () => {
 
       <ChampionSelect
         options={championsOptions}
-        className="champ-select"
-        classNamePrefix="champ-select"
+        className='champ-select'
+        classNamePrefix='champ-select'
         onChange={handleChampionSelect}
       />
 

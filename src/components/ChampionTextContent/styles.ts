@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 interface ITextParagraphProps {
   backgroundColor?: string;
@@ -15,7 +15,6 @@ export const TextParagraph = styled.p<ITextParagraphProps>`
 
     color: transparent;
 
-    background: ${({ theme, backgroundColor }) =>
-      backgroundColor || theme.colors.primary};
+    background: ${({ theme, backgroundColor }) => backgroundColor || theme.colors.primary};
   }
 `;

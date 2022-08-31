@@ -1,9 +1,9 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from 'react';
 
-import { toast } from "react-toastify";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { guessTheChampApi } from "../services";
-import { userStateAtom } from "../state";
+import { toast } from 'react-toastify';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { guessTheChampApi } from '../services';
+import { userStateAtom } from '../state';
 
 type AuthStateType = {
   isAuthenticated: boolean;
@@ -17,13 +17,7 @@ type AuthStateType = {
 
 export type AuthContextStateType = {
   authState: AuthStateType;
-  handleLogin: ({
-    username,
-    password,
-  }: {
-    username: string;
-    password: string;
-  }) => void;
+  handleLogin: ({ username, password }: { username: string; password: string }) => void;
   handleSignUp: ({
     username,
     password,
@@ -45,25 +39,19 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const setUserState = useSetRecoilState(userStateAtom);
 
-  const handleLogin = async ({
-    username,
-    password,
-  }: {
-    username: string;
-    password: string;
-  }) => {
+  const handleLogin = async ({ username, password }: { username: string; password: string }) => {
     setAuthState((prev) => ({ ...prev, isLoading: true }));
 
     try {
-      const response = await guessTheChampApi.client.post("/login", {
+      const response = await guessTheChampApi.client.post('/login', {
         username,
         password,
       });
 
       const { user, token } = response.data;
 
-      localStorage.setItem("@token", token);
-      localStorage.setItem("@user", JSON.stringify(user));
+      localStorage.setItem('@token', token);
+      localStorage.setItem('@user', JSON.stringify(user));
 
       setAuthState((prev) => ({
         ...prev,
@@ -73,7 +61,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         isAuthenticated: true,
       }));
     } catch (error) {
-      toast.error("Login failed");
+      toast.error('Login failed');
       setAuthState((prev) => ({ ...prev, isLoading: false }));
     }
   };
@@ -90,17 +78,17 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setAuthState((prev) => ({ ...prev, isLoading: true }));
 
     try {
-      if (password !== passwordConfirmation) throw "Passwords does not match";
+      if (password !== passwordConfirmation) throw 'Passwords does not match';
 
-      const response = await guessTheChampApi.client.post("/sign-up", {
+      const response = await guessTheChampApi.client.post('/sign-up', {
         username,
         password,
       });
 
       const { user, token } = response.data;
 
-      localStorage.setItem("@token", token);
-      localStorage.setItem("@user", JSON.stringify(user));
+      localStorage.setItem('@token', token);
+      localStorage.setItem('@user', JSON.stringify(user));
 
       setAuthState((prev) => ({
         ...prev,
@@ -110,11 +98,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         isAuthenticated: true,
       }));
 
-      toast.success("Welcome and have fun! 🕹");
+      toast.success('Welcome and have fun! 🕹');
     } catch (error: any) {
-      const errorMessage = !!error?.response?.data
-        ? error.response.data.details
-        : error;
+      const errorMessage = error?.response?.data ? error.response.data.details : error;
 
       toast.error(`Error! - ${errorMessage}`);
 
@@ -145,9 +131,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("@token");
+    const token = localStorage.getItem('@token');
     if (token) {
-      const storeUser = JSON.parse(localStorage.getItem("@user") ?? "");
+      const storeUser = JSON.parse(localStorage.getItem('@user') ?? '');
       setAuthState({
         user: storeUser,
         token,

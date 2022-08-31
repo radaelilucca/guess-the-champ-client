@@ -1,11 +1,11 @@
-import { AES, enc } from "crypto-js";
+import { AES, enc } from 'crypto-js';
 
-import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { guessTheChampApi } from "../services";
-import { gameStateAtom, userStateAtom } from "../state";
-import { MatchDataType } from "../types";
+import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { guessTheChampApi } from '../services';
+import { gameStateAtom, userStateAtom } from '../state';
+import { MatchDataType } from '../types';
 
 const useGameState = () => {
   const [gameState, setGameState] = useRecoilState(gameStateAtom);
@@ -14,8 +14,7 @@ const useGameState = () => {
 
   const navigate = useNavigate();
 
-  const handleLoading = (state: boolean) =>
-    setGameState((prev) => ({ ...prev, isLoading: state }));
+  const handleLoading = (state: boolean) => setGameState((prev) => ({ ...prev, isLoading: state }));
 
   const handleGuess = async (championKey: string) => {
     try {
@@ -23,16 +22,16 @@ const useGameState = () => {
         `/game/guess/${gameState.currentMatchData.id}`,
         {
           champion: championKey,
-        }
+        },
       );
 
       const { isCorrect, matchScore } = response.data;
 
       if (isCorrect) {
-        toast.success("HIT!", {
+        toast.success('HIT!', {
           closeOnClick: true,
           autoClose: 1000,
-          onClose: () => navigate("/"),
+          onClose: () => navigate('/'),
         });
 
         setUserState((prev) => ({
@@ -42,17 +41,17 @@ const useGameState = () => {
             total: prev.scores.total + Number(matchScore),
           },
         }));
-      } else toast.error("Miss 😢");
+      } else toast.error('Miss 😢');
     } catch (error) {
       console.error(error);
-      toast.error("Error on submit");
+      toast.error('Error on submit');
     }
   };
 
   const handleCreateMatch = async () => {
     try {
       setGameState((prev) => ({ ...prev, isLoading: true }));
-      const response = await guessTheChampApi.client.get("/game/create");
+      const response = await guessTheChampApi.client.get('/game/create');
 
       const { matchData: encryptedMatchData, matchId } = response.data;
 
@@ -60,9 +59,7 @@ const useGameState = () => {
 
       const bytes = AES.decrypt(encryptedMatchData, key);
 
-      const decryptedData = JSON.parse(
-        bytes.toString(enc.Utf8)
-      ) as MatchDataType;
+      const decryptedData = JSON.parse(bytes.toString(enc.Utf8)) as MatchDataType;
 
       setGameState((prev) => ({
         ...prev,
@@ -72,8 +69,8 @@ const useGameState = () => {
     } catch (error) {
       setGameState((prev) => ({ ...prev, isLoading: false }));
 
-      console.error("Error on game creation");
-      toast.error("Error on game creation. :/");
+      console.error('Error on game creation');
+      toast.error('Error on game creation. :/');
     }
   };
 
@@ -81,7 +78,7 @@ const useGameState = () => {
     handleLoading(true);
 
     try {
-      const response = await guessTheChampApi.client.get("/champs");
+      const response = await guessTheChampApi.client.get('/champs');
 
       const availableChampions = response.data.champions;
 
@@ -91,7 +88,7 @@ const useGameState = () => {
         isLoading: false,
       }));
     } catch (error) {
-      console.error("ERROR ON GET AVAILABLE CHAMPS!");
+      console.error('ERROR ON GET AVAILABLE CHAMPS!');
       setGameState((prev) => ({
         ...prev,
         isLoading: false,

@@ -1,6 +1,6 @@
-export type GuessingModeNamesType = "ability" | "blurb" | "passive";
+export type GuessingModeNamesType = 'ability' | 'blurb' | 'passive';
 
-export type GuessingSubModeNamesType = "image" | "description";
+export type GuessingSubModeNamesType = 'image' | 'description';
 
 export type GuessingModeType = {
   name: GuessingModeNamesType;
