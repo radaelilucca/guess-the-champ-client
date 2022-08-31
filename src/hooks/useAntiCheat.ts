@@ -21,7 +21,7 @@ const useAntiCheat = () => {
   };
 
   const keyboardWatcher = (e: KeyboardEvent) => {
-    const blockedKeys = ["f12", "shift", "alt"];
+    const blockedKeys = ["f12", "control", "alt"];
 
     const isBlocked = !!blockedKeys.filter((blockedItem) => {
       return e.code.toLowerCase().includes(blockedItem);
