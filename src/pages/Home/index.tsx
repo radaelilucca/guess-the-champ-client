@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { IoLogOut } from "react-icons/io5";
 
 import { LoadingSplash } from "../../components";
 import { APP_CONTENT } from "../../const";
@@ -14,9 +14,13 @@ import {
   PlayButton,
   PlayButtonContainer,
 } from "./styles";
+import { useContext } from "react";
+import { AuthContext } from "../../context";
 
 const HomePage = () => {
   const { gameState, handleCreateMatch } = useGameState();
+
+  const { handleLogout } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -31,6 +35,7 @@ const HomePage = () => {
 
   return (
     <Container>
+      <IoLogOut size={40} onClick={handleLogout} />
       <LoadingSplash isOpen={gameState.isLoading} />
       <HeadlineContainer>
         <img src="/images/logo.png" />

@@ -1,4 +1,7 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router";
+import { LoadingSplash } from "../../components";
+import { AuthContext } from "../../context";
 
 import {
   Container,
@@ -16,13 +19,34 @@ const LoginPage = () => {
     password: "",
   });
 
-  const handleSubmit = (e: FormEvent) => {
+  const {
+    handleLogin,
+    authState: { isLoading, isAuthenticated },
+  } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    console.log(formValues);
+    try {
+      await handleLogin({
+        username: formValues.user,
+        password: formValues.password,
+      });
+    } catch (error) {
+      console.error("Error on login:", error);
+    }
   };
+
+  const handleNavigateToSignUp = () => navigate("/sign-up");
+
+  if (isAuthenticated) return <Navigate to="/" />;
+
   return (
     <Container>
+      <LoadingSplash isOpen={isLoading} />
+
       <Header>
         <img src="/images/logo.png" />
         <h1>Welcome back!</h1>
@@ -30,6 +54,7 @@ const LoginPage = () => {
 
       <Form onSubmit={handleSubmit}>
         <CustomInput
+          required
           value={formValues.user}
           label="nickname"
           placeholder="nickname"
@@ -38,6 +63,7 @@ const LoginPage = () => {
           }
         />
         <CustomInput
+          required
           value={formValues.password}
           type="password"
           label="password"
@@ -51,7 +77,7 @@ const LoginPage = () => {
 
         <SubmitButton type="submit">sign in</SubmitButton>
 
-        <SignUpButton type="button">
+        <SignUpButton type="button" onClick={handleNavigateToSignUp}>
           doesn't have an account? sign up here!
         </SignUpButton>
       </Form>

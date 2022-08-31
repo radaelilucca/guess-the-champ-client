@@ -3,7 +3,7 @@ import { Container, Spinner, LoadingText, EmoteImage } from "./styles";
 
 interface ILoadingSplash {
   loadingText?: string;
-  isOpen: boolean;
+  isOpen?: boolean;
 }
 const LoadingSplash = ({
   loadingText = "Loading...",

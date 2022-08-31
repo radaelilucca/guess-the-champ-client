@@ -11,6 +11,22 @@ export const Container = styled.main`
   padding-top: 2.5rem;
 
   color: ${({ theme }) => theme.colors.primary};
+
+  position: relative;
+
+  svg {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    cursor: pointer;
+
+    transition: color 150ms ease;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.tertiary};
+    }
+  }
 `;
 
 export const HeadlineContainer = styled.header`

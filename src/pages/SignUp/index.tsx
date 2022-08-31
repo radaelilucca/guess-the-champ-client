@@ -1,4 +1,6 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
+import { Navigate } from "react-router";
+import { AuthContext } from "../../context";
 
 import {
   Container,
@@ -16,11 +18,20 @@ const SignUpPage = () => {
     passwordConfirmation: "",
   });
 
-  const handleSubmit = (e: FormEvent) => {
+  const {
+    handleSignUp,
+    authState: { isAuthenticated },
+  } = useContext(AuthContext);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    console.log(formValues);
+    const { user: username, password, passwordConfirmation } = formValues;
+
+    await handleSignUp({ username, password, passwordConfirmation });
   };
+
+  if (isAuthenticated) return <Navigate to="/" />;
   return (
     <Container>
       <Header>
