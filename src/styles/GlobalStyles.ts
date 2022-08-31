@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyles = createGlobalStyle`
 .app-wrapper {
   position: relative;
-  max-width: 500px;
+  max-width: 450px;
 
   height: 100%;
   width: 100%;
