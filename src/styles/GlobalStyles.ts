@@ -14,11 +14,8 @@ export const GlobalStyles = createGlobalStyle`
   justify-content: center;
   align-items:center;
   background-color: ${(props) => props.theme.colors.darkBackground};
-
-  font-family: ${(props) => props.theme.fontFamily.poppins}; 
   
   * {
-      transition: all 150ms ease;
       font-family: ${(props) => props.theme.fontFamily.poppins}; 
     }
   }
