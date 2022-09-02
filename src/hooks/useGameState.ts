@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
 import { AES, enc } from 'crypto-js';
@@ -15,8 +14,6 @@ const useGameState = () => {
 
   const setUserState = useSetRecoilState(userStateAtom);
 
-  const navigate = useNavigate();
-
   const handleGuess = async (championKey: string) => {
     try {
       const response = await guessTheChampApi.client.post(
@@ -28,12 +25,13 @@ const useGameState = () => {
 
       const { isCorrect, matchScore } = response.data;
 
+      const toastConfig = {
+        closeOnClick: true,
+        autoClose: 1000,
+      };
+
       if (isCorrect) {
-        toast.success('HIT!', {
-          closeOnClick: true,
-          autoClose: 1000,
-          onClose: () => navigate('/'),
-        });
+        toast.success('HIT!', toastConfig);
 
         setUserState((prev) => ({
           ...prev,
@@ -42,7 +40,7 @@ const useGameState = () => {
             total: prev.scores.total + Number(matchScore),
           },
         }));
-      } else toast.error('Miss 😢');
+      } else toast.error('Miss 😢', toastConfig);
     } catch (error) {
       verbose.error({ id: 'Error on Guess request', data: error });
       toast.error('Error on submit');

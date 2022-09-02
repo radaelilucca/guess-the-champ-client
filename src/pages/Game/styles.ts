@@ -1,6 +1,8 @@
 import ReactSelect from 'react-select';
 import styled from 'styled-components';
 
+import { Button } from '~/components';
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,28 +25,23 @@ export const UserInfoContainer = styled.div`
   gap: 1rem;
 `;
 
-export const ClueButton = styled.button`
+export const QuitButton = styled(Button)`
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
 
-  background-color: ${({ theme }) => theme.colors.primary};
+  height: 2.5rem;
+  width: 2.5rem;
 
-  border-radius: ${({ theme }) => theme.rounded.lg};
+  padding: 0.2rem;
 
-  display: grid;
-  place-items: center;
+  color: ${({ theme }) => theme.colors.primary};
 
-  height: 3rem;
-  width: 3rem;
-  opacity: 0.45;
+  background: none;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.secondary};
-  }
-
-  &:disabled {
-    background-color: ${({ theme }) => theme.colors.darkText};
+    background: none;
+    color: ${({ theme }) => theme.colors.tertiary};
   }
 `;
 
@@ -94,11 +91,33 @@ export const ChampContentContainer = styled.div`
   }
 `;
 
-export const ChampionSelect = styled(ReactSelect)`
+export const SelectContainer = styled.div`
   width: 100%;
 
+  display: flex;
+  gap: 0.2rem;
+`;
+
+export const ReloadButton = styled(Button)`
+  height: 2.5rem;
+  width: 2.5rem;
+
+  padding: 0;
+
+  color: ${({ theme }) => theme.colors.primary};
+
+  background: none;
+
+  &:hover {
+    background: none;
+    color: ${({ theme }) => theme.colors.tertiary};
+  }
+`;
+
+export const ChampionSelect = styled(ReactSelect)`
   font-size: 1.2rem;
   color: ${({ theme }) => theme.colors.darkText};
+  flex: 1;
 `;
 
 export const ScoresContainer = styled.div`

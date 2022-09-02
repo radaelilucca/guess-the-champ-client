@@ -1,17 +1,20 @@
-import { Navigate } from 'react-router-dom';
+import { IoLogOut, IoReloadCircle } from 'react-icons/io5';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { useRecoilValue } from 'recoil';
 
-import { ChampionTextContent } from '~/components';
+import { ChampionTextContent, LoadingSplash } from '~/components';
 import { useAntiCheat, useGameState } from '~/hooks';
 import { userStateAtom } from '~/state';
 
 import {
   ChampContentContainer,
   ChampionSelect,
-  ClueButton,
   Container,
   Question,
+  QuitButton,
+  ReloadButton,
+  SelectContainer,
   UserInfoContainer,
 } from './styles';
 
@@ -60,16 +63,20 @@ const UserInfo = () => {
 };
 
 const GamePage = () => {
-  const { gameState, handleGuess } = useGameState();
+  const { gameState, handleGuess, handleCreateMatch } = useGameState();
 
-  const { currentMatchData, availableChampions = [] } = gameState;
+  const { currentMatchData, availableChampions = [], isLoading } = gameState;
 
   const { cheatsAttempts, maxAttempts } = useAntiCheat();
+
+  const navigate = useNavigate();
 
   const championsOptions = availableChampions.map(({ name, key }) => ({
     value: key,
     label: name,
   }));
+
+  const handleQuit = () => navigate('/');
 
   const handleChampionSelect = (newValue: any) => {
     handleGuess(newValue.label as string);
@@ -110,14 +117,16 @@ const GamePage = () => {
       </ChampContentContainer>
     );
   };
+
   if (cheatsAttempts >= maxAttempts) return <Navigate to='/' />;
   if (!currentMatchData) return <Navigate to='/' />;
 
   return (
     <Container>
-      <ClueButton type='button' disabled>
-        <img src='/icons/tip-icon.svg' alt='Tip icon on button' />
-      </ClueButton>
+      <LoadingSplash isOpen={isLoading} />
+      <QuitButton type='button' onClick={handleQuit}>
+        <IoLogOut />
+      </QuitButton>
 
       <UserInfo />
 
@@ -125,12 +134,17 @@ const GamePage = () => {
 
       {renderChampionContent()}
 
-      <ChampionSelect
-        options={championsOptions}
-        className='champ-select'
-        classNamePrefix='champ-select'
-        onChange={handleChampionSelect}
-      />
+      <SelectContainer>
+        <ChampionSelect
+          options={championsOptions}
+          className='champ-select'
+          classNamePrefix='champ-select'
+          onChange={handleChampionSelect}
+        />
+        <ReloadButton onClick={handleCreateMatch}>
+          <IoReloadCircle />
+        </ReloadButton>
+      </SelectContainer>
 
       {/* <ScoresContainer>
         <h5>Your scores:</h5>
