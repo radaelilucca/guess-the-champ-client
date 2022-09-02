@@ -21,7 +21,7 @@ export const Container = styled.button`
 
   font-family: Poppins, sans-serif;
 
-  transition: background-color 150ms ease;
+  transition: background-color 120ms ease;
   cursor: pointer;
 
   &:hover {
