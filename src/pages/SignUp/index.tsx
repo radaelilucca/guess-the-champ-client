@@ -1,9 +1,17 @@
 import { FormEvent, useContext, useState } from 'react';
-import { Navigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 
 import { AuthContext } from '~/context';
 
-import { Container, Header, Form, SubmitButton, SignInButton, CustomInput } from './styles';
+import {
+  Container,
+  Header,
+  Form,
+  SubmitButton,
+  SignInButton,
+  CustomInput,
+  CustomGuestButton,
+} from './styles';
 
 const SignUpPage = () => {
   const [formValues, setFormValues] = useState({
@@ -11,6 +19,8 @@ const SignUpPage = () => {
     password: '',
     passwordConfirmation: '',
   });
+
+  const navigate = useNavigate();
 
   const {
     handleSignUp,
@@ -69,8 +79,12 @@ const SignUpPage = () => {
 
         <SubmitButton type='submit'>sign up</SubmitButton>
 
-        <SignInButton type='button'>already has an account? sign in here!</SignInButton>
+        <SignInButton type='button' onClick={() => navigate('/login')}>
+          already has an account? sign in here!
+        </SignInButton>
       </Form>
+
+      <CustomGuestButton />
     </Container>
   );
 };

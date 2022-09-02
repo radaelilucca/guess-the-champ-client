@@ -46,13 +46,15 @@ import {
 // };
 
 const UserInfo = () => {
-  const { username, scores } = useRecoilValue(userStateAtom);
+  const { username, scores, isGuest } = useRecoilValue(userStateAtom);
   return (
     <UserInfoContainer>
       <span>user: {username}</span>
-      <span>
-        total score: <strong>{scores.total}</strong>
-      </span>
+      {!isGuest && (
+        <span>
+          total score: <strong>{scores.total}</strong>
+        </span>
+      )}
     </UserInfoContainer>
   );
 };

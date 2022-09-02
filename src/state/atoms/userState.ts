@@ -3,6 +3,7 @@ import { atom } from 'recoil';
 type UserStateType = {
   id: string;
   username: string;
+  isGuest?: boolean;
   scores: {
     total: number;
     oneStar?: number;

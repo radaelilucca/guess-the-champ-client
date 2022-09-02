@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Button, Input } from '~/components';
+import { Button, GuestButton, Input } from '~/components';
 
 export const Container = styled.main`
   display: flex;
@@ -80,3 +80,7 @@ export const SubmitButton = styled(Button)`
 `;
 
 export const SignUpButton = styled(BaseRedirectButton)``;
+
+export const CustomGuestButton = styled(GuestButton)`
+  margin-top: auto;
+`;

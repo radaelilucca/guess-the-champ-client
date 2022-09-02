@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Button, Input } from '~/components';
+import { Button, GuestButton, Input } from '~/components';
 
 export const Container = styled.main`
   display: flex;
@@ -69,4 +69,8 @@ export const SignInButton = styled.button`
   &:hover {
     color: ${({ theme }) => theme.colors.tertiary};
   }
+`;
+
+export const CustomGuestButton = styled(GuestButton)`
+  margin-top: auto;
 `;

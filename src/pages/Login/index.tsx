@@ -13,6 +13,7 @@ import {
   SignUpButton,
   ForgotPasswordButton,
   CustomInput,
+  CustomGuestButton,
 } from './styles';
 
 const LoginPage = () => {
@@ -81,6 +82,8 @@ const LoginPage = () => {
           doesn&apos;t have an account? sign up here!
         </SignUpButton>
       </Form>
+
+      <CustomGuestButton />
     </Container>
   );
 };

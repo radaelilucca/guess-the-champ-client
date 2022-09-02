@@ -6,28 +6,13 @@ import { useSetRecoilState } from 'recoil';
 import { guessTheChampApi } from '~/services';
 import { userStateAtom } from '~/state';
 
-type AuthStateType = {
-  isAuthenticated: boolean;
-  user?: {
-    username: string;
-    id: string;
-  };
-  token?: string;
-  isLoading?: boolean;
-};
+import type { AuthStateType, IHandleLoginProps, IHandleSignUpProps } from './authentication.types';
 
 export type AuthContextStateType = {
   authState: AuthStateType;
-  handleLogin: ({ username, password }: { username: string; password: string }) => void;
-  handleSignUp: ({
-    username,
-    password,
-    passwordConfirmation,
-  }: {
-    username: string;
-    password: string;
-    passwordConfirmation: string;
-  }) => void;
+  handleLogin: (props: IHandleLoginProps) => Promise<void>;
+  handleSignUp: (props: IHandleSignUpProps) => Promise<void>;
+  handleLoginAsGuest: () => Promise<void>;
   handleLogout: () => void;
 };
 
@@ -40,7 +25,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const setUserState = useSetRecoilState(userStateAtom);
 
-  const handleLogin = async ({ username, password }: { username: string; password: string }) => {
+  const handleLogin = async ({ username, password, isGuest }: IHandleLoginProps) => {
     setAuthState((prev) => ({ ...prev, isLoading: true }));
 
     try {
@@ -51,12 +36,17 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       const { user, token } = response.data;
 
+      user.isGuest = isGuest;
+
       localStorage.setItem('@token', token);
       localStorage.setItem('@user', JSON.stringify(user));
 
       setAuthState((prev) => ({
         ...prev,
-        user,
+        user: {
+          ...user,
+          isGuest,
+        },
         token,
         isLoading: false,
         isAuthenticated: true,
@@ -67,15 +57,18 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const handleSignUp = async ({
-    username,
-    password,
-    passwordConfirmation,
-  }: {
-    username: string;
-    password: string;
-    passwordConfirmation: string;
-  }) => {
+  const handleLoginAsGuest = async () => {
+    await handleLogin({ username: 'guest', password: 'guest000', isGuest: true });
+  };
+
+  const handleLogout = async () => {
+    localStorage.clear();
+    setAuthState({
+      isAuthenticated: false,
+    } as AuthStateType);
+  };
+
+  const handleSignUp = async ({ username, password, passwordConfirmation }: IHandleSignUpProps) => {
     setAuthState((prev) => ({ ...prev, isLoading: true }));
 
     try {
@@ -109,13 +102,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const handleLogout = async () => {
-    localStorage.clear();
-    setAuthState({
-      isAuthenticated: false,
-    } as AuthStateType);
-  };
-
   const getUserProfile = useCallback(
     async (username: string) => {
       const response = await guessTheChampApi.client.get(`/users/${username}`);
@@ -125,12 +111,13 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUserState({
         id: user.id,
         username: user.username,
+        isGuest: authState?.user?.isGuest,
         scores: {
           total: user.totalScore,
         },
       });
     },
-    [setUserState],
+    [setUserState, authState],
   );
 
   useEffect(() => {
@@ -156,7 +143,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [authState.isAuthenticated, authState.user, getUserProfile]);
 
-  const value = { authState, handleLogin, handleLogout, handleSignUp };
+  const value = { authState, handleLogin, handleLogout, handleSignUp, handleLoginAsGuest };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
