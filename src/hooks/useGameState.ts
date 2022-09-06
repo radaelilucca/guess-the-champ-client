@@ -5,7 +5,7 @@ import { AES, enc } from 'crypto-js';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { guessTheChampApi } from '~/services';
-import { gameStateAtom, userStateAtom } from '~/state';
+import { ChampionOptionType, gameStateAtom, userStateAtom } from '~/state';
 import { MatchDataType } from '~/types';
 import { verbose } from '~/utils';
 
@@ -14,12 +14,27 @@ const useGameState = () => {
 
   const setUserState = useSetRecoilState(userStateAtom);
 
-  const handleGuess = async (championKey: string) => {
+  const championsOptions = gameState.availableChampions
+    .filter(({ key }) => !gameState.missedChampions.includes(key))
+    .map(({ name, key }) => ({
+      value: key,
+      label: name,
+    }));
+
+  const handleGuess = async (champion: ChampionOptionType) => {
+    setGameState((prev) => ({
+      ...prev,
+      selectedChampion: champion,
+      missedChampions: [...prev.missedChampions, champion.value],
+    }));
+
     try {
+      if (!gameState.currentMatchData) throw new Error('Missing match data');
+
       const response = await guessTheChampApi.client.post(
         `/game/guess/${gameState.currentMatchData.id}`,
         {
-          champion: championKey,
+          champion: champion.label,
         },
       );
 
@@ -31,7 +46,7 @@ const useGameState = () => {
       };
 
       if (isCorrect) {
-        toast.success('HIT!', toastConfig);
+        toast.success('HIT!', { ...toastConfig, onClose: () => handleCreateMatch() });
 
         setUserState((prev) => ({
           ...prev,
@@ -49,7 +64,13 @@ const useGameState = () => {
 
   const handleCreateMatch = async () => {
     try {
-      setGameState((prev) => ({ ...prev, isLoading: true }));
+      setGameState((prev) => ({
+        ...prev,
+        isLoading: true,
+        selectedChampion: null,
+        missedChampions: [],
+      }));
+
       const response = await guessTheChampApi.client.get('/game/create');
 
       const { matchData: encryptedMatchData, matchId } = response.data;
@@ -96,15 +117,12 @@ const useGameState = () => {
     }
   }, [setGameState]);
 
-  // TODO: FILTER PIXELADO NAS IMGS EM MODO HARD;
-  //TODO: FOCUS INPUT
-  // TODO: WORD LIST POR CHAMP NO MODO HARD;
-
   return {
     gameState,
     getAvailableChampions,
     handleCreateMatch,
     handleGuess,
+    championsOptions,
   };
 };
 

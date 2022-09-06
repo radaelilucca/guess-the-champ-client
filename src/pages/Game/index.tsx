@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 
 import { ChampionTextContent, LoadingSplash } from '~/components';
 import { useAntiCheat, useGameState } from '~/hooks';
-import { userStateAtom } from '~/state';
+import { ChampionOptionType, userStateAtom } from '~/state';
 
 import {
   ChampContentContainer,
@@ -63,28 +63,29 @@ const UserInfo = () => {
 };
 
 const GamePage = () => {
-  const { gameState, handleGuess, handleCreateMatch } = useGameState();
+  const { gameState, handleGuess, handleCreateMatch, championsOptions } = useGameState();
 
-  const { currentMatchData, availableChampions = [], isLoading } = gameState;
+  const { currentMatchData, isLoading } = gameState;
 
   const { cheatsAttempts, maxAttempts } = useAntiCheat();
 
   const navigate = useNavigate();
 
-  const championsOptions = availableChampions.map(({ name, key }) => ({
-    value: key,
-    label: name,
-  }));
-
   const handleQuit = () => navigate('/');
 
-  const handleChampionSelect = (newValue: any) => {
-    handleGuess(newValue.label as string);
+  const handleChampionSelect = (champion: ChampionOptionType) => {
+    handleGuess(champion);
   };
+
+  const handleNewMatch = () => handleCreateMatch();
 
   const renderChampionContent = () => {
     let textContent = '';
     let imageSRC = '';
+
+    if (!currentMatchData) return null;
+
+    if (isLoading) return null;
 
     const { guessingMode, champion, passive, randomAbility } = currentMatchData;
 
@@ -139,9 +140,11 @@ const GamePage = () => {
           options={championsOptions}
           className='champ-select'
           classNamePrefix='champ-select'
-          onChange={handleChampionSelect}
+          onChange={(newValue) => handleChampionSelect(newValue as ChampionOptionType)}
+          value={gameState.selectedChampion}
+          placeholder='Type or select a champion'
         />
-        <ReloadButton onClick={handleCreateMatch}>
+        <ReloadButton onClick={handleNewMatch}>
           <IoReloadCircle />
         </ReloadButton>
       </SelectContainer>
