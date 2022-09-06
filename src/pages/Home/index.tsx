@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { LoadingSplash } from '~/components';
 import { APP_CONTENT } from '~/const';
 import { useGameState } from '~/hooks';
+import { guessTheChampSocket } from '~/services';
 import { verbose } from '~/utils';
 
 import { AuthContext } from '../../context';
