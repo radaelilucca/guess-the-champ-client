@@ -9,7 +9,7 @@ export interface IButtonProps extends ButtonHTMLAttributes<any> {
 
 const Button = ({ className, children, ...props }: IButtonProps) => {
   return (
-    <Container className={className} {...props}>
+    <Container className={className} type='button' {...props}>
       {children}
     </Container>
   );
