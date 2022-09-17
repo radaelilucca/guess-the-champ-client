@@ -5,3 +5,5 @@ export * from './Button';
 export * from './VersionTag';
 export * from './PrivateRoute';
 export * from './GuestButton';
+export * from './Backdrop';
+export * from './CreateGameMenu';
