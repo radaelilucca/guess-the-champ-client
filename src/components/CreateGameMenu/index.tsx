@@ -1,12 +1,10 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { IoPersonSharp, IoPeopleSharp } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 
 import type { PlayersModesType } from '~/types';
 
-import { Backdrop } from '../Backdrop';
 import {
-  Container,
   CreateButton,
   JoinButton,
   JoinConfigsContainer,
@@ -44,7 +42,7 @@ const PlayersModeToggle = ({ value, toggleValue }: IPlayersModeToggleProps) => {
   );
 };
 
-const CreateGameMenu = () => {
+const CreateGameMenuComponent = (props, ref) => {
   const [playersMode, setPlayersMode] = useState<PlayersModesType>('single-player');
   const [matchCode, setMatchCode] = useState('');
 
@@ -57,32 +55,29 @@ const CreateGameMenu = () => {
   };
 
   return (
-    <Container>
-      <Backdrop />
-      <MenuContainer>
-        <h5>create new game</h5>
+    <MenuContainer ref={ref}>
+      <h5>create new game</h5>
 
-        <PlayersModeToggle value={playersMode} toggleValue={setPlayersMode} />
-        <CreateButton onClick={handleCreate}>create</CreateButton>
+      <PlayersModeToggle value={playersMode} toggleValue={setPlayersMode} />
+      <CreateButton onClick={handleCreate}>create</CreateButton>
 
-        {playersMode === 'multiplayer' && (
-          <JoinConfigsContainer>
-            <h5>join a game</h5>
+      {playersMode === 'multiplayer' && (
+        <JoinConfigsContainer>
+          <h5>join a game</h5>
 
-            <JoinContainer>
-              <MatchCodeInput
-                label='match code'
-                value={matchCode}
-                onChange={(newValue) => setMatchCode(newValue)}
-              />
+          <JoinContainer>
+            <MatchCodeInput
+              label='match code'
+              value={matchCode}
+              onChange={(newValue) => setMatchCode(newValue)}
+            />
 
-              <JoinButton onClick={handleJoinGame}>join</JoinButton>
-            </JoinContainer>
-          </JoinConfigsContainer>
-        )}
-      </MenuContainer>
-    </Container>
+            <JoinButton onClick={handleJoinGame}>join</JoinButton>
+          </JoinContainer>
+        </JoinConfigsContainer>
+      )}
+    </MenuContainer>
   );
 };
 
-export { CreateGameMenu };
+export const CreateGameMenu = forwardRef(CreateGameMenuComponent);
