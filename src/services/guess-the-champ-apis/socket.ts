@@ -1,7 +1,7 @@
 import { io as SocketIo } from 'socket.io-client';
 
 import { ChampionOptionType } from '~/state';
-const URL = `${import.meta.env.VITE_API_SOCKET_URL}`;
+const URL = `${import.meta.env.VITE_API_URL}`;
 
 class SocketClient {
   private connection;
