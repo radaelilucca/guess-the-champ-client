@@ -29,6 +29,18 @@ export const Container = styled.main`
   }
 `;
 
+export const CreateMenuContainer = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+
+  display: grid;
+  place-items: center;
+
+  padding: 2rem;
+`;
+
 export const HeadlineContainer = styled.header`
   display: flex;
   flex-direction: column;
